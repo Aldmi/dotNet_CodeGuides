@@ -1,0 +1,21 @@
+﻿{
+  "$schema": "https://json.schemastore.org/launchsettings.json",
+  "profiles": {
+    "http": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "applicationUrl": "http://localhost:5254",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+
+        "APP_NAME__ApplicationOptions__MyDbOption__Connection": "ENV Connection",
+        "APP_NAME__ApplicationOptions__MyDbOption__Config__param1": "ENV Config.param",
+        
+        "APP_NAME__ApplicationOptions__MessageBrokerOption__Url": "ENV 192.168.1.200:9999",
+        "APP_NAME__ApplicationOptions__MessageBrokerOption__TopicName": "ENV MainDataTopic"
+      }
+    }
+  }
+}
