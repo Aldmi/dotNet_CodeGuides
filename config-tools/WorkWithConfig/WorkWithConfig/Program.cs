@@ -1,11 +1,16 @@
 using Microsoft.Extensions.Options;
+using WorkWithConfig;
 using WorkWithConfig.ConfigureOptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Вариант 1.  байндинг через Ioptions
 //уровни вложенности в enviroment переаменных отделяются __  
 builder.Configuration.AddEnvironmentVariables(prefix: "APP_NAME__"); //APP_NAME__ - префикс который игноритруется при чтении по имени.
 builder.Services.ConfigureOptions<ApplicationOptionsSetup>();
+
+//Вариант 2. При запуске приложения создавать эеземпляр настроек и регистрировать его в DI
+var appOptions= builder.Services.RegisterApplicationOptions(builder.Configuration);
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,7 +29,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-app.MapGet("options", (IOptions<ApplicationOptions> options) =>
+app.MapGet("options", (IOptions<ApplicationOptions> options, ApplicationOptions appOptions) =>
 {
     var response = new
     {
