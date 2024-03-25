@@ -15,6 +15,10 @@
         <vm:MainWindowViewModel/>
     </Design.DataContext>
 
-    <TextBlock Text="{Binding GetEntityId}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-
+    
+    <StackPanel Margin="5" Spacing="5">
+        <TextBlock Text="{Binding Counter}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Command="{Binding IncrementCounterCommand}" FontSize="30"  HorizontalAlignment="Center" VerticalAlignment="Center" Padding="20">+</Button>
+    </StackPanel>
+    
 </Window>
