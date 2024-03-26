@@ -1,0 +1,22 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="using:DialogWindow.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="DialogWindow.Views.DialogWindow"
+        Title="DialogWindow"
+        Width="1000" Height="550"
+        WindowStartupLocation="CenterOwner"
+        x:DataType="vm:DialogViewModel">
+
+        <StackPanel>
+                <TextBox Text="{Binding PersoneModel.Name}"></TextBox>
+                <Button Content="Return ResultViewModel" 
+                        DockPanel.Dock="Bottom" 
+                        HorizontalAlignment="Center"
+                        Command="{Binding GetResultVmCommand}"/>
+                
+        </StackPanel>
+        
+</Window>

@@ -11,6 +11,7 @@ builder.Services.AddRazorComponents()
 //Варианты регистрации фабрик:
 //-----------------------------------------------------
 //Вариант 1. Простая фабрика Func<ISample1>, которую можно внедрить везед где нужно в runtime создавать объекты.
+// Можно врнедрять непосредственно Func<ISample1>
 //builder.Services.AddTransient<ISample1, Sample1>();
 //builder.Services.AddSingleton<Func<ISample1>>(serviceProvider => () => serviceProvider.GetRequiredService<ISample1>());
 
