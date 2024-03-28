@@ -27,7 +27,7 @@ public partial class App : Application
         // Creates a ServiceProvider containing services from the provided IServiceCollection
         var services = collection.BuildServiceProvider();
         
-        var vm = services.GetRequiredService<MainWindowViewModel>(); //Создать root объект через DI, что создаст весь граф необходимых объектов
+        var vm = services.GetRequiredService<MainWindowViewModel>(); //Создать root объект через DI, что создаст весь граф необходимых объектов. services (IoC контейнер при этом удерживается в памяти, т.к. выданный граф объектов удерживает его в памяти.)
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow

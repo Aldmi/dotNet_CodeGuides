@@ -12,17 +12,17 @@ public partial class MainWindow : ReactiveWindow<MainWindowViewModel>
     {
         InitializeComponent();
         this.WhenActivated(action =>
-            action(ViewModel!.ShowDialogInteraction.RegisterHandler(DoShowDialogAsync)));
+            action(ViewModel!.ShowDialogInteraction.RegisterHandler(ShowDialogInteractionHandlerAsync)));
     }
     
     
-    private async Task DoShowDialogAsync(InteractionContext<DialogViewModel, Persone?> interaction)
+    private async Task ShowDialogInteractionHandlerAsync(InteractionContext<DialogViewModel, Persone?> interaction)
     {
         var dialog = new DialogWindow
         {
             DataContext = interaction.Input  //установили DataContext равным DialogViewModel  
         };
         var result = await dialog.ShowDialog<Persone?>(this);
-        interaction.SetOutput(result);
+        interaction.SetOutput(result);      
     }
 }

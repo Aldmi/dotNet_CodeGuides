@@ -16,8 +16,8 @@ public static class AbstractFactoryExtensions
     where TImplementation : class, TInterface
     {
         services.AddTransient<TInterface, TImplementation>();
-        services.AddSingleton<Func<TInterface>>(s=> ()=> s.GetRequiredService<TInterface>());
-        services.AddSingleton<IAbstractFactory<TInterface>, AbstractFactory<TInterface>>();
+        services.AddScoped<Func<TInterface>>(s=> ()=> s.GetRequiredService<TInterface>()); //Не Singleton - чтобы не удерживать созданный экземпляр TInterface в памяти при выходе за scope. (Иначе не будет вызван метод Dispose.)
+        services.AddScoped<IAbstractFactory<TInterface>, AbstractFactory<TInterface>>();   //Не Singleton - чтобы не удерживать созданный экземпляр TInterface в памяти при выходе за scope. (Иначе не будет вызван метод Dispose.)
         return services;
     }
 }

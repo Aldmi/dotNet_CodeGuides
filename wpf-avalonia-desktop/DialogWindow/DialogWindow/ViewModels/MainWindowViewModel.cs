@@ -8,9 +8,26 @@ namespace DialogWindow.ViewModels;
 
 public class MainWindowViewModel : ViewModelBase
 {
-    public MainWindowViewModel()
+    /// <summary>
+    /// Варинат с ручным созданием зависимостей
+    /// </summary>
+    // public MainWindowViewModel()
+    // {
+    //     ShowDialogInteraction = new Interaction<DialogViewModel, Persone?>();
+    //     ShowDialogWindowCommand = ReactiveCommand.CreateFromTask(async () =>
+    //     {
+    //         var dialogViewModel = new DialogViewModel();
+    //         PersoneModel = await ShowDialogInteraction.Handle(dialogViewModel);
+    //     });
+    // }
+    //
+    
+    /// <summary>
+    /// Вариант с DI
+    /// </summary>
+    public MainWindowViewModel(Interaction<DialogViewModel, Persone?> showDialogInteraction)
     {
-        ShowDialogInteraction = new Interaction<DialogViewModel, Persone?>();
+        ShowDialogInteraction = showDialogInteraction;
         ShowDialogWindowCommand = ReactiveCommand.CreateFromTask(async () =>
         {
             var dialogViewModel = new DialogViewModel();

@@ -1,8 +1,10 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using DialogWindow.ViewModels;
 using DialogWindow.Views;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DialogWindow;
 
@@ -15,11 +17,22 @@ public partial class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
+        // If you use CommunityToolkit, line below is needed to remove Avalonia data validation.
+        // Without this line you will get duplicate validations from both Avalonia and CT
+        BindingPlugins.DataValidators.RemoveAt(0);
+        
+        // Register all the services needed for the application to run
+        var collection = DependencyInjectonRegistrator.RegisterAllServices();
+        
+        // Creates a ServiceProvider containing services from the provided IServiceCollection
+        var services = collection.BuildServiceProvider();
+        
+        var vm = services.GetRequiredService<MainWindowViewModel>(); //Создать root объект через DI, что создаст весь граф необходимых объектов. Сам IoC - services при этом  НЕ уничтожится при выходе из метода OnFrameworkInitializationCompleted. Т.к.  
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
             desktop.MainWindow = new MainWindow
             {
-                DataContext = new MainWindowViewModel(),
+                DataContext = vm
             };
         }
 

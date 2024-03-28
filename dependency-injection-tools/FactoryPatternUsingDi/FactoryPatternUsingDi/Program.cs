@@ -1,3 +1,4 @@
+using FactoryPatternUsingDi.BackgroundServices;
 using FactoryPatternUsingDi.Components;
 using FactoryPatternUsingDi.Factories;
 using FactoryPatternUsingDi.Samples;
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddHostedService<TestBackgroundService>();
 
 //Варианты регистрации фабрик:
 //-----------------------------------------------------
@@ -41,5 +44,13 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+//DEBUG------------------------
+// using (var scope=app.Services.CreateScope())
+// {
+//     var factory = scope.ServiceProvider.GetRequiredService<IAbstractFactory<ISample1>>();
+//     var obj = factory.Create();
+// }
+//DEBUG------------------------
 
 app.Run();
