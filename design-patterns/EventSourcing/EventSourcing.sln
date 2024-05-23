@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing_InMemDb", "EventSourcing_InMemDb\EventSourcing_InMemDb.csproj", "{B3A01445-04F7-4BBA-82D4-AFBCCE8C828E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing_DynamoDb_V2", "EventSourcing_DynamoDb_V2\EventSourcing_DynamoDb_V2.csproj", "{79E1CF3C-0500-4A8D-98A9-C8B78C810081}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3A01445-04F7-4BBA-82D4-AFBCCE8C828E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3A01445-04F7-4BBA-82D4-AFBCCE8C828E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3A01445-04F7-4BBA-82D4-AFBCCE8C828E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3A01445-04F7-4BBA-82D4-AFBCCE8C828E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{79E1CF3C-0500-4A8D-98A9-C8B78C810081}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{79E1CF3C-0500-4A8D-98A9-C8B78C810081}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{79E1CF3C-0500-4A8D-98A9-C8B78C810081}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{79E1CF3C-0500-4A8D-98A9-C8B78C810081}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
