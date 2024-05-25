@@ -1,18 +1,32 @@
-﻿using EventSourcing_DynamoDb_V2.Events;
+﻿using System.Text.Json.Serialization;
+using EventSourcing_DynamoDb_V2.Events;
 using EventSourcing_DynamoDb.Events;
 
 namespace EventSourcing_DynamoDb_V2.Entities;
 
 public class Student
 {
+    /// <summary>
+    /// Первичный ключ 
+    /// </summary>
+    [JsonPropertyName("pk")]
+    public string Pk => $"{Id.ToString()}_view";
+
+    /// <summary>
+    /// Ключ сортировки
+    /// </summary>
+    [JsonPropertyName("sk")]
+    public string Sk => $"{Id.ToString()}_view";
+
+
     public Guid Id { get; set; }
-    
+
     public string FullName { get; set; }
-    
+
     public string Email { get; set; }
 
     public List<string> EnrolledCourses { get; set; } = [];
-    
+
     public DateTime DateOfBirth { get; set; }
 
 
@@ -23,13 +37,13 @@ public class Student
         Email = studentCreated.Email;
         DateOfBirth = studentCreated.DateOfBirth;
     }
-    
+
     private void Apply(StudentUpdated studentUpdated)
     {
         FullName = studentUpdated.FullName;
         Email = studentUpdated.Email;
     }
-    
+
     private void Apply(StudentEnrolled studentEnrolled)
     {
         if (!EnrolledCourses.Contains(studentEnrolled.CourseName))
@@ -37,7 +51,7 @@ public class Student
             EnrolledCourses.Add(studentEnrolled.CourseName);
         }
     }
-    
+
     private void Apply(StudentUnEnrolled studentUnEnrolled)
     {
         if (EnrolledCourses.Contains(studentUnEnrolled.CourseName))

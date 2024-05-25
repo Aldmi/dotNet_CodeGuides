@@ -1,0 +1,20 @@
+@host = http://localhost:5112
+
+### job_Enqueue
+GET {{host}}/job_Enqueue/
+Accept: application/json
+
+### job_Schedule
+GET {{host}}/job_Schedule/
+Accept: application/json
+
+### job_recurring
+GET {{host}}/job_recurring/
+Accept: application/json
+
+### job_recurring_2
+GET {{host}}/job_recurring_2/
+Accept: application/json
+
+
+

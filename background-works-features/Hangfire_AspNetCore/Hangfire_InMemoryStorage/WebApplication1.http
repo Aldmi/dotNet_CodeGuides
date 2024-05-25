@@ -1,0 +1,7 @@
+@host = http://localhost:5136
+
+GET {{host}}/job/
+Accept: application/json
+
+###
+
