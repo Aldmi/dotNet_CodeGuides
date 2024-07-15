@@ -1,0 +1,142 @@
+﻿@page "/"
+@using System.Security
+@using Microsoft.AspNetCore.SignalR.Client
+
+@inject HttpClient HttpClient;
+
+<PageTitle>Long-Running tasks</PageTitle>
+
+<div>
+    <p> Version 1 - Blocking Call</p>
+    <button
+        class="btn btn-primary"
+        @onclick="GetReportV1Async"
+        disabled="@_disabled">
+        GET REPORT V1
+    </button>
+    <p>Result: @_response</p>
+</div>
+
+<hr/>
+
+<div>
+    <p> Version 2 - Polling</p>
+    <button
+        class="btn btn-warning"
+        @onclick="GetReportV2Async"
+        disabled="@_disabled">
+        GET REPORT V2
+    </button>
+    <p>Processing job with ID: @_jobId</p>
+    @foreach (var status in _pollingStatus)
+    {
+        <p>@status</p>
+    }
+</div>
+
+<hr/>
+
+<div>
+    <p> Version 3 - WebSocket (SignalR)</p>
+    <button
+        class="btn btn-success"
+        @onclick="GetReportV3Async"
+        disabled="@_disabled">
+        GET REPORT V3
+    </button>
+    <p>Processing job with ID: @_socketJobid</p>
+    @foreach (var status in _socketStatus)
+    {
+    <p>@status</p>
+    }
+</div>
+
+@code {
+    public bool _disabled;
+    public string? _response = null;
+
+    #region Get Report V1
+
+    private async Task GetReportV1Async()
+    {
+        _disabled = true;
+        _response = null;
+
+        var response = await HttpClient.GetStringAsync("reports/v1");
+
+        _disabled = false;
+        _response = response;
+    }
+
+    #endregion
+
+    
+    
+    #region Get Report V2
+
+    string? _jobId = null;
+    List<string> _pollingStatus = [];
+
+    private async Task GetReportV2Async()
+    {
+        _disabled = true;
+        _pollingStatus = [];
+        _jobId = null;
+        _response = null;
+
+        var response = await HttpClient.PostAsync("reports/v2", null);
+        _jobId = await response.Content.ReadAsStringAsync();
+
+        using var periodicTimer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+        string? lastState = null;
+        while (await periodicTimer.WaitForNextTickAsync() && lastState != "Succeeded") //раз в секунду проверяем завершилась ли задача. 
+        {
+            lastState = await HttpClient.GetStringAsync(response.Headers.Location);
+            _pollingStatus.Add(lastState);
+            await InvokeAsync(StateHasChanged); //Обновить UI
+        }
+        
+        _disabled = false;
+    }
+
+    #endregion
+    
+    
+    
+    
+    #region Get Report V3
+
+    private HubConnection _hubConnection;
+    List<string> _socketStatus = [];
+    string? _socketJobid = null;
+
+    private async Task GetReportV3Async()
+    {
+        _disabled = true;
+        _socketStatus = [];
+        _socketJobid = null;
+        
+        var response = await HttpClient.PostAsync("reports/v3", null);
+        _socketJobid = await response.Content.ReadAsStringAsync();
+        
+        _disabled = false;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _hubConnection = new HubConnectionBuilder()
+            .WithUrl("http://localhost:5101/notifications")
+            .Build();
+
+        _hubConnection.On<string>("ReciveNotification", message =>
+        {
+            _socketStatus.Add(message);
+            InvokeAsync(StateHasChanged);
+        });
+
+        await _hubConnection.StartAsync();
+    }
+
+    #endregion
+}
+

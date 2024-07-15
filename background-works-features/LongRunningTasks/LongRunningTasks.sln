@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{E9BF2E7B-AFF3-4871-A971-11FA7B0B0917}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "server", "server", "{9D0BC776-0677-472D-8A98-C9F96EC452AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongRunning.Api", "LongRunning.Api\LongRunning.Api.csproj", "{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongRunning.Client.BlazorWebAsm", "LongRunning.Client.BlazorWebAsm\LongRunning.Client.BlazorWebAsm.csproj", "{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67} = {9D0BC776-0677-472D-8A98-C9F96EC452AC}
+		{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7} = {E9BF2E7B-AFF3-4871-A971-11FA7B0B0917}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{245548D8-3B1A-44E9-B9D3-D92A3DC3EB67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B3E848A-7F42-42C6-8BD6-8F76CEEA68E7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

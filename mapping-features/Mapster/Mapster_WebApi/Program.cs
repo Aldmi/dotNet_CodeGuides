@@ -1,5 +1,4 @@
 using Application;
-using Application.DataAccess.Abstract;
 using Application.Features.GetProduct;
 using Domain.Entities;
 using Infrastucture.DataAccess.Pg;
@@ -29,8 +28,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapGet("/getNewProduct", (
-        IMapper mapper,
-        IDbContext dbContext) =>
+        IMapper mapper
+        ) =>
     {
         var product = new Product(
             Guid.NewGuid(),
@@ -41,9 +40,7 @@ app.MapGet("/getNewProduct", (
         );
 
         var productDto=mapper.Map<GetProductDto>(product);
-        
         var productModel= mapper.Map<Product>(productDto);
-        
         return productModel;
     })
     .WithOpenApi();
