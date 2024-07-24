@@ -1,4 +1,4 @@
-﻿namespace WebApi.Domain;
+﻿namespace WebApi.Domain.Entityes;
 
 public class Product
 {
@@ -12,6 +12,4 @@ public class Product
     public bool IsSaleEnabled { get; set; }
     
     public int StockCount { get; set; }
-
-    public bool IsAvailable => IsSaleEnabled && StockCount > 0;
 }

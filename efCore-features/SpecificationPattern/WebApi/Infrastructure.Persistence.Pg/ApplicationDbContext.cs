@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using WebApi.Domain;
+using WebApi.Domain.Entityes;
 
 namespace WebApi.Infrastructure.Persistence.Pg;
 
@@ -11,7 +12,7 @@ public sealed class ApplicationDbContext : DbContext
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
         : base(options)
     {
-        //Database.EnsureDeleted();
+       // Database.EnsureDeleted();
         Database.EnsureCreated();   // создаем базу данных при первом обращении
     }
     

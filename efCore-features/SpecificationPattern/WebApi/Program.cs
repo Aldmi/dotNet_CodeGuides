@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Application.Core.Features.Products.GetProductFeature;
 using WebApi.Domain;
+using WebApi.Domain.Entityes;
 using WebApi.Infrastructure.Persistence.Pg;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
-    options.UseNpgsql(connection);
+    options
+        .UseNpgsql(connection)
+        .UseProjectables();    //указываем бибюлиотеку для генерации Expression 
 });
 
 builder.Services.AddScoped<GetProductService>();
