@@ -1,13 +1,24 @@
+using Microsoft.EntityFrameworkCore;
+using WebApi.Application.Core.Features.Products.GetProductFeature;
+using WebApi.Domain;
+using WebApi.Infrastructure.Persistence.Pg;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
+{
+    options.UseNpgsql(connection);
+});
+
+builder.Services.AddScoped<GetProductService>();
+
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +27,29 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/getAllProducts", async (GetProductService productService) =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
+        var products = await productService.GetAllProducts();
+        return products;
     })
-    .WithName("GetWeatherForecast")
+    .WithName("getAllProducts")
+    .WithOpenApi();
+
+
+app.MapGet("/addProduct", async (ApplicationDbContext dbContext) =>
+    {
+        var newProduct = new Product()
+        {
+            Id = Guid.NewGuid(), //Можно указывать или не указывать Guid.
+            Name = "Apple",
+            Price = 98,
+            IsSaleEnabled = true
+        };
+        var product = dbContext.Add(newProduct);
+        await dbContext.SaveChangesAsync();
+        return product.Entity;
+    })
+    .WithName("addProduct")
     .WithOpenApi();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int) (TemperatureC / 0.5556);
-}

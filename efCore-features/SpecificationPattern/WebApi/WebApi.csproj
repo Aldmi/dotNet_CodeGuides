@@ -21,10 +21,4 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Application.Core\" />
-      <Folder Include="Domain\" />
-      <Folder Include="Infrastructure.Persistence.Pg\" />
-    </ItemGroup>
-
 </Project>
