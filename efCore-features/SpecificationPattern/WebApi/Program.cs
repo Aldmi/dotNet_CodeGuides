@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebApi.Application.Core.Features.Products.GetProductFeature;
 using WebApi.Domain;
-using WebApi.Domain.Entityes;
+using WebApi.Domain.Entities.Models;
 using WebApi.Infrastructure.Persistence.Pg;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ builder.Services.AddDbContext<ApplicationDbContext>((sp, options) =>
 {
     options
         .UseNpgsql(connection)
-        .UseProjectables();    //указываем бибюлиотеку для генерации Expression 
+        .UseProjectables(); //указываем бибюлиотеку для генерации Expression 
 });
 
 builder.Services.AddScoped<GetProductService>();
@@ -36,6 +36,51 @@ app.MapGet("/getAllProducts", async (GetProductService productService) =>
         return products;
     })
     .WithName("getAllProducts")
+    .WithOpenApi();
+
+
+app.MapGet("/getAvailableProducts", async (GetProductService productService) =>
+    {
+        var products = await productService.GetAvailableProducts();
+        return products;
+    })
+    .WithName("getAvailableProducts")
+    .WithOpenApi();
+
+
+app.MapGet("/getAvailableAndExpansiveProducts", async (GetProductService productService) =>
+    {
+        var products = await productService.GetAvailableAndExpansiveProducts(50);
+        return products;
+    })
+    .WithName("getAvailableAndExpansiveProducts")
+    .WithOpenApi();
+
+
+app.MapGet("/getAvailableAndExpansiveProducts", async (GetProductService productService) =>
+    {
+        var products = await productService.GetAvailableAndNameStartWithProducts("Snick");
+        return products;
+    })
+    .WithName("getAvailableAndExpansiveProducts")
+    .WithOpenApi();
+
+
+app.MapGet("/getAvailableProductsInCategoryName", async (GetProductService productService) =>
+    {
+        var products = await productService.GetAvailableProductsInCategoryName("Food");
+        return products;
+    })
+    .WithName("getAvailableProductsInCategoryName")
+    .WithOpenApi();
+
+
+app.MapGet("/getCategorysWithAvailableProducts", async (GetProductService productService) =>
+    {
+        var categories = await productService.GetCategorysWithAvailableProducts();
+        return categories;
+    })
+    .WithName("getCategorysWithAvailableProducts")
     .WithOpenApi();
 
 

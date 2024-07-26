@@ -1,4 +1,4 @@
-﻿namespace WebApi.Domain.Entityes;
+﻿namespace WebApi.Domain.Entities.Models;
 
 public class Product
 {
@@ -10,6 +10,8 @@ public class Product
     /// Видимость товара в продаже
     /// </summary>
     public bool IsSaleEnabled { get; set; }
-    
     public int StockCount { get; set; }
+
+    public Category? Category { get; set; }
+    public Guid? CategoryId { get; set; }
 }
