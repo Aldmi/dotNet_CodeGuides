@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediatrNotificationAndStream", "MediatrNotificationAndStream\MediatrNotificationAndStream.csproj", "{49C36546-802A-43BD-AB17-C3E4071ED385}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediatrFeatures", "MediatrFeatures\MediatrFeatures.csproj", "{49C36546-802A-43BD-AB17-C3E4071ED385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
