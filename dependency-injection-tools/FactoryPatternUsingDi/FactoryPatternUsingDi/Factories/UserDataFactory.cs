@@ -12,8 +12,8 @@ public static class GenerateClassWithDataFactoryExtension
     public static IServiceCollection AddGenerateClassWithDataFactory(this IServiceCollection services)
     {
         // IoC ответчает только за время жизни самой фабрики (name) => new UserData(name). для очиски IUserData объекта нужно вручную вызывать Dispose() когда нужно. 
-        services.AddSingleton<Func<string, IUserData>>(_ => (name) => new UserData(name)); 
-        services.AddSingleton<IUserDataFactory, UserDataFactory>();
+        services.AddScoped<Func<string, IUserData>>(_ => (name) => new UserData(name)); 
+        services.AddTransient<IUserDataFactory, UserDataFactory>();
         return services;
     }
 }

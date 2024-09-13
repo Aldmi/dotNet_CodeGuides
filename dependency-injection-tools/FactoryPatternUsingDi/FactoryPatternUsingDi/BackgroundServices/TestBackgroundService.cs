@@ -12,7 +12,9 @@ public class TestBackgroundService : BackgroundService
     /// <summary>
     /// В Singletone используем всегда IServiceScopeFactory.
     /// </summary>
-    public TestBackgroundService(ILogger<TestBackgroundService> logger, IServiceScopeFactory serviceScopeFactory)
+    public TestBackgroundService(
+        ILogger<TestBackgroundService> logger,
+        IServiceScopeFactory serviceScopeFactory)
     {
         _logger = logger;
         _serviceScopeFactory = serviceScopeFactory;
@@ -27,12 +29,12 @@ public class TestBackgroundService : BackgroundService
     
     private async Task DoWorkAsync(CancellationToken stoppingToken)
     {
-        using var scope = _serviceScopeFactory.CreateScope();
-        var factory = scope.ServiceProvider.GetRequiredService<IAbstractFactory<ISample1>>();
-        for (int i = 0; i < 10; i++)
-        {
-            var obj= factory.Create(); //Создаем объекты в scope, и при выходе из функции DoWorkAsync будет вызван Dispose
-            await Task.Delay(200, stoppingToken);
-        }
+        // using var scope = _serviceScopeFactory.CreateScope();
+        // var factory = scope.ServiceProvider.GetRequiredService<IAbstractFactory<ISample1>>();
+        // for (int i = 0; i < 10; i++)
+        // {
+        //     var obj= factory.Create(); //Создаем объекты в scope, и при выходе из функции DoWorkAsync будет вызван Dispose
+        //     await Task.Delay(200, stoppingToken);
+        // }
     }
 }

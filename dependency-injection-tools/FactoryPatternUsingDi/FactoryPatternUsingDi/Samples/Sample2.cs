@@ -13,6 +13,7 @@ public class Sample2 : ISample2
 
     public Sample2()
     {
+     
         Console.WriteLine("ctor Sample2 >>>>>>>>>>");
         RandomValue = Random.Shared.Next(1, 100);
     }

@@ -1,0 +1,6 @@
+@MediatrNotificationAndStream_HostAddress = http://localhost:5037
+
+GET {{MediatrNotificationAndStream_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
