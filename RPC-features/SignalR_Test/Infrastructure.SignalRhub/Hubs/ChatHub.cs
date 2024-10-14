@@ -41,7 +41,7 @@ public class ChatHub : Hub
         var context = Context.GetHttpContext();
         if(context is not null)
         {
-            // получаем кук name
+            // получаем Cookies name
             if (context.Request.Cookies.ContainsKey("name"))
             {
                 if (context.Request.Cookies.TryGetValue("name", out var userName))
