@@ -12,9 +12,9 @@ public static class DependencyInjection
     {
         services.AddSignalR().AddHubOptions<ChatHub>(options =>                                      //настроим конкретный хаб
         {
-            //options.EnableDetailedErrors = true;
+            options.EnableDetailedErrors = true;
            //options.KeepAliveInterval = System.TimeSpan.FromMinutes(1);
-           options.ClientTimeoutInterval = TimeSpan.FromSeconds(10); //30 default
+           //options.ClientTimeoutInterval = TimeSpan.FromSeconds(10); //30 default
         });
         return services;
     }

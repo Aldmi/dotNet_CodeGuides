@@ -1,4 +1,5 @@
 using App.Core;
+using Domain.Core.Models;
 using Infrastructure.SignalRhub;
 using Infrastructure.SignalRhub.Hubs;
 using Microsoft.AspNetCore.SignalR;
@@ -18,8 +19,8 @@ builder.Services.AddCors(options =>
 {
     //WithOrigins и AllowCredentials - ОБЯЗАТЕЛЬНО, для SignalR клиента с другого хоста.
     options.AddPolicy("CorsPolicy", policyBuilder => policyBuilder
-        //.WithOrigins("http://localhost:4200")
-        .SetIsOriginAllowed((host) => true) //Ручная проверка данных хоста (можно заменить WithOrigins, если не указывать разрещенные адреса)
+        .WithOrigins("http://localhost:4200")
+        //.SetIsOriginAllowed((host) => true) //Ручная проверка данных хоста (можно заменить WithOrigins, если не указывать разрещенные адреса)
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials() //разрешается принимать идентификационные данные от клиента
@@ -43,8 +44,9 @@ app.UseCors("CorsPolicy");
 app.MapSignalRHub(builder.Configuration);
 
 //Сервер - инициатор посылки запросов.
-app.MapGet("Receive", async (IHubContext<ChatHub> hubContext) =>
+app.MapGet("Receive", async (IHubContext<ChatHub> hubContext, ILogger<Program> logger) =>
 {
+    logger.LogInformation("REST-Get Receive");
     // await hubContext.Clients.All.SendAsync("Receive from GET Receive endpoints", "Alex", $"Message - {DateTime.Now.ToLongTimeString()}");
     await hubContext.Clients.All.SendAsync("Receive", new Persone("Alex", 20, DateTime.Now));
 });
