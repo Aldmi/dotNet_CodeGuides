@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "ServerStreamServiceApp";
+
+package serverStream;
+
+service Messenger {
+  rpc GetDataStream (Request) returns (stream Response);
+}
+
+message Request{ }
+
+message Response{
+  string content = 1;
+}

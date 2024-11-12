@@ -16,7 +16,8 @@ var env= Environment.GetEnvironmentVariable("SIGNALR_CLIENT_ID");
 var connection = // подключение для взаимодействия с хабом
     // создаем подключение к хабу
     new HubConnectionBuilder()
-    .WithUrl("http://localhost:5081/chat")
+    //.WithUrl("http://localhost:5081/chat")
+    .WithUrl("http://localhost:44138/statisticHub")
     //.WithUrl("http://localhost:8310/chat")
     .WithAutomaticReconnect()   // автопереподключение
     .ConfigureLogging(logging => 
