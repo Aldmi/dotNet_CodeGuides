@@ -1,0 +1,27 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MongoDbCRUD", "MongoDbCRUD\MongoDbCRUD.csproj", "{2783940B-60D5-4EF1-B40F-39CFFFEF78A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Modules", "Tests.Modules\Tests.Modules.csproj", "{24233C86-8EF5-4624-90DA-BDB81746A32E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{3618F1C1-1C42-451A-A598-515B4BB49A5A}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.Md = Readme.Md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2783940B-60D5-4EF1-B40F-39CFFFEF78A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2783940B-60D5-4EF1-B40F-39CFFFEF78A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2783940B-60D5-4EF1-B40F-39CFFFEF78A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2783940B-60D5-4EF1-B40F-39CFFFEF78A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24233C86-8EF5-4624-90DA-BDB81746A32E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24233C86-8EF5-4624-90DA-BDB81746A32E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24233C86-8EF5-4624-90DA-BDB81746A32E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24233C86-8EF5-4624-90DA-BDB81746A32E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
