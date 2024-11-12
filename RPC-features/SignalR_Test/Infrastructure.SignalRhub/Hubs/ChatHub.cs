@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Logging;
 
 namespace Infrastructure.SignalRhub.Hubs;
@@ -22,7 +23,7 @@ public class ChatHub : Hub
     
     public override async Task OnConnectedAsync()
     {
-        _logger.LogWarning("{ContextConnectionId} вошел в чат", Context.ConnectionId);
+        _logger.LogInformation("{ContextConnectionId} вошел в чат", Context.ConnectionId);
        //await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} вошел в чат");
        GetClientHttpInfo();
         await base.OnConnectedAsync();
@@ -30,10 +31,12 @@ public class ChatHub : Hub
     
     public override async Task OnDisconnectedAsync(Exception? exception)
     {
-        _logger.LogWarning("{ContextConnectionId} покинул чат", Context.ConnectionId);
+        _logger.LogWarning("{ContextConnectionId} покинул чат  Exception= '{Exception}'", Context.ConnectionId, exception);
         //await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} покинул в чат");
         await base.OnDisconnectedAsync(exception);
     }
+
+
 
 
     private void GetClientHttpInfo()

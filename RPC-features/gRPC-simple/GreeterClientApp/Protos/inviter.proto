@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+option csharp_namespace = "InviterClientApp";
+
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+package inviter;
+
+
+service Inviter {
+  rpc Invite (Request) returns (Response);
+}
+
+message Request{
+  string name = 1;
+}
+
+
+message Response{
+  string invitation = 1;
+  google.protobuf.Timestamp start = 2;
+  google.protobuf.Duration duration = 3;
+}

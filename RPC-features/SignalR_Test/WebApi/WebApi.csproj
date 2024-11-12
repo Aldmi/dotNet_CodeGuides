@@ -4,6 +4,8 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +17,12 @@
       <ProjectReference Include="..\App.Core\App.Core.csproj" />
       <ProjectReference Include="..\Domain.Core\Domain.Core.csproj" />
       <ProjectReference Include="..\Infrastructure.SignalRhub\Infrastructure.SignalRhub.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="..\.dockerignore">
+        <Link>.dockerignore</Link>
+      </Content>
     </ItemGroup>
 
 </Project>
