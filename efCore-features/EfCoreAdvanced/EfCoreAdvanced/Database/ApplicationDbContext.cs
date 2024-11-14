@@ -21,7 +21,13 @@ public class ApplicationDbContext(IConfiguration configuration) : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
     }
-    
-    public ILoggerFactory CreateLoggerFactory() =>
-        LoggerFactory.Create(builder => { builder.AddConsole(); }); //в секцию настроек дефолтного логгера добавить ограничения  "Microsoft.EntityFrameworkCore.Database" : "Information"
+
+    private static ILoggerFactory CreateLoggerFactory() =>
+        LoggerFactory.Create(builder =>
+        {
+            builder.AddFilter((category, level) =>
+                    category == DbLoggerCategory.Database.Command.Name &&
+                    level == LogLevel.Information)
+                .AddConsole();
+        });
 }

@@ -2,8 +2,7 @@
 
 namespace Tests;
 
-
-record User(string Role, int UserId);
+internal record User(string Role, int UserId);
 
 public class RoleManagerDictionary
 {
@@ -17,7 +16,6 @@ public class RoleManagerDictionary
     }
 }
 
-
 public class RoleManagerConcurrentDictionary
 {
     private readonly ConcurrentDictionary<string, User> _record = new();
@@ -29,5 +27,3 @@ public class RoleManagerConcurrentDictionary
         return _record.TryAdd(role, user);
     }
 }
-
-

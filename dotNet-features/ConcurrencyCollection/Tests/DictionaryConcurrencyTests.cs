@@ -6,13 +6,10 @@ namespace Tests;
 
 public class DictionaryConcurrencyTests(ITestOutputHelper output)
 {
-    void PrintDictionary(IDictionary<int, string> dict)
+    private void PrintDictionary(IDictionary<int, string> dict)
     {
         output.WriteLine("PrintDictionary ----------------------------- ");
-        foreach (var pair in dict)
-        {
-            output.WriteLine($"[{pair.Key}]= {pair.Value}");
-        }
+        foreach (var pair in dict) output.WriteLine($"[{pair.Key}]= {pair.Value}");
     }
 
     [Fact]
@@ -33,7 +30,7 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
         }
 
         //act
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var task1 = Task.Run(() => Add("Add_1"));
             var task2 = Task.Run(() => Add("Add_2"));
@@ -46,8 +43,8 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
         //а ключ был продублирован одним из методов. Ошибка была получена, потому что обобщённый словарь по умолчанию не обеспечивает потокобезопасность.
         await act.Should().ThrowAsync<ArgumentException>();
     }
-    
-    
+
+
     [Fact]
     public async Task ConcurrentDictionary_Concurrency_Add_RepeatKey_Success()
     {
@@ -65,7 +62,7 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
             }
         }
 
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var task1 = Task.Run(() => TryAdd("1"));
             var task2 = Task.Run(() => TryAdd("2"));
@@ -139,7 +136,7 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
             }
         }
 
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var task1 = Task.Run(() => TryAdd("Add"));
             var task2 = Task.Run(() => read());
@@ -180,7 +177,7 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
             }
         }
 
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var task1 = Task.Run(() => TryAdd("Add"));
             var task2 = Task.Run(() => read());
@@ -193,12 +190,12 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
 
 
     /// <summary>
-    /// Иногда InvalidOperationException не вылетает и код добавления в словарь заканчивается без ошибок
+    ///     Иногда InvalidOperationException не вылетает и код добавления в словарь заканчивается без ошибок
     /// </summary>
     [Fact]
     public async Task RoleManagerDictionary_Add_RepeatKey_Faild()
     {
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var roleManager = new RoleManagerDictionary();
             var tasks = Enumerable.Range(1, 100)
@@ -206,16 +203,18 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
                 .ToList();
             await Task.WhenAll(tasks);
         };
-        
+
         //act, assert
-        await act.Should().ThrowAsync<Exception>(); //Exception: Operations that change non-concurrent collections must have exclusive access.
+        await act.Should()
+            .ThrowAsync<
+                Exception>(); //Exception: Operations that change non-concurrent collections must have exclusive access.
     }
-    
-    
+
+
     [Fact]
     public async Task RoleManagerConcurrentDictionary_Add_RepeatKey_Succsess()
     {
-        Func<Task> act = async () =>
+        var act = async () =>
         {
             var roleManager = new RoleManagerConcurrentDictionary();
             var tasks = Enumerable.Range(1, 100)
@@ -223,7 +222,7 @@ public class DictionaryConcurrencyTests(ITestOutputHelper output)
                 .ToList();
             await Task.WhenAll(tasks);
         };
-        
+
         //act, assert
         await act.Should().NotThrowAsync<InvalidOperationException>();
     }
