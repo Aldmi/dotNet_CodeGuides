@@ -6,7 +6,7 @@ namespace Domain.Books.Entities
         public int BookId { get; set; } //#B
         public string Title { get; set; }
         public string Description { get; set; }
-        public DateTime PublishedOn { get; set; }
+        public DateOnly PublishedOn { get; set; }
         public string? Publisher { get; set; }
         public decimal Price { get; set; }
         public string? ImageUrl { get; set; }

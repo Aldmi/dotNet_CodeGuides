@@ -29,7 +29,8 @@ public class BookContext(string connectionStr, Action<string>? logTo = null, Log
         modelBuilder.Entity<BookAuthor>() 
             .HasKey(x => new {x.BookId, x.AuthorId});
         
-        // modelBuilder.Entity<BookView>()
-        //     .ToView("Books");
+        modelBuilder.Entity<BookView>()
+            .ToView("Books");
     }
+    
 }
