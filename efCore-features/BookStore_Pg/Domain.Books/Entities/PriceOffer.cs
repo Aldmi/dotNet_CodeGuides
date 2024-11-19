@@ -16,5 +16,6 @@ namespace Domain.Books.Entities
     /***************************************************
     #N The PriceOffer is designed to override the normal price. It is a One-to-ZeroOrOne relationhsip
     #O This foreign key links back to the book it should be applied to
+     Создается уникальный индекс BookId, чтобы у одной книги был только один PriceOffer "create unique index "IX_PriceOffers_BookId" on "PriceOffers" ("BookId");"
      * *************************************************/
 }

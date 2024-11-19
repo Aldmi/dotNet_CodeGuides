@@ -67,7 +67,7 @@ internal class FilmConfiguration : IEntityTypeConfiguration<Film>
             .UsingEntity<Film_Category>(
                 "film_category",
                 l => l.HasOne<Category>(e=>e.Category).WithMany().HasForeignKey("category_id"),
-                r => r.HasOne<Film>(e=>e.Film).WithMany(e=>e.FilmCategories).HasForeignKey("film_id"),
+                r => r.HasOne<Film>(e=>e.Film).WithMany().HasForeignKey("film_id"),
                 j =>
                 { 
                     j.HasKey("category_id", "film_id");

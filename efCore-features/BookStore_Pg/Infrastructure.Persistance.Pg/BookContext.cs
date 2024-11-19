@@ -31,6 +31,7 @@ public class BookContext(string connectionStr, Action<string>? logTo = null, Log
         
         modelBuilder.Entity<BookView>()
             .ToView("Books");
+        
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookContext).Assembly);
     }
-    
 }

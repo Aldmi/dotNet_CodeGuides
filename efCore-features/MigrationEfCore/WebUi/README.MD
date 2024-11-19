@@ -40,7 +40,12 @@
 `dotnet ef migrations script 20231206141937_ADD_ADDRESS --project Infrastructure.Persistence.Pg --context ApplicationDbContext --startup-project WebUi`
 
 
-dotnet ef migrations bundle --project Infrastructure.Persistence.Pg --context ApplicationDbContext --startup-project WebUi --self-contained -r linux-x64
+## Использовать IDesignTimeDbContextFactory
+Если реализовать фабрику DbContext в проекте c самим `ApplicationDbContext`  `Infrastructure.Persistence.Pg`
+тогда можно отказаться от зависимости `Microsoft.EntityFrameworkCore.Design` в startup проекте `WebUi`
 
-dotnet ef migrations bundle --project Infrastructure.Persistence.Pg --context ApplicationDbContext --startup-project WebUi --self-contained
+`dotnet ef migrations remove --project Infrastructure.Persistence.Pg --context ApplicationDbContext`
+
+
+
 

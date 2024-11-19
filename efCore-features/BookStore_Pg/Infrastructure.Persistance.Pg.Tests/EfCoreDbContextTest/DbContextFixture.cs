@@ -19,8 +19,7 @@ public class DbContextFixture
     
     public BookContext DbContextFactory()
     {
-        var configuration = AppSettings.GetConfiguration();
-        var connection = configuration.GetConnectionString("BookStore_Pg_Connection_Str");
+        var connection = GetConnectionString();
         var context = new BookContext(connection!);
         return context;
     }
@@ -28,10 +27,15 @@ public class DbContextFixture
     
     public BookContext DbContextFactoryWithSqlLogs(Action<string> logTo, LogLevel logLevel = LogLevel.Information)
     {
-        var configuration = AppSettings.GetConfiguration();
-        var connection = configuration.GetConnectionString("BookStore_Pg_Connection_Str");
+        var connection = GetConnectionString();
         var context = new BookContext(connection!, logTo, logLevel);
         return context;
+    }
+
+    private string? GetConnectionString()
+    {
+       var configuration = AppSettings.GetConfiguration();
+       return configuration.GetConnectionString("BookStore_Pg_Connection_Str");
     }
 }
 

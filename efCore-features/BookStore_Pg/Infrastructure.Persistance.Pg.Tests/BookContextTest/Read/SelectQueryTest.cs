@@ -1,5 +1,6 @@
 ﻿using Infrastructure.Persistance.Pg.Tests.EfCoreDbContextTest;
 using Infrastructure.Persistance.Pg.Tests.TestHelpers;
+using Microsoft.EntityFrameworkCore;
 using Xunit.Abstractions;
 using Xunit.Extensions.AssertExtensions;
 
