@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Infrastructure.Persistance.Pg;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using TestSupport.Helpers;
 
-namespace Infrastructure.Persistance.Pg.Tests.EfCoreDbContextTest;
+namespace Test;
 
 public class DbContextFixture
 {
@@ -28,7 +29,7 @@ public class DbContextFixture
     public BookContext DbContextFactoryWithSqlLogs(Action<string> logTo, LogLevel logLevel = LogLevel.Information)
     {
         var connection = GetConnectionString();
-        var context = new BookContext(connection!, logTo, logLevel);
+        var context = new BookContext(connection!, null, logTo, logLevel);
         return context;
     }
 

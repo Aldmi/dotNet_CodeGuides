@@ -1,9 +1,11 @@
 ﻿
+using CSharpFunctionalExtensions;
+
 namespace Domain.Books.Entities
 {
-    public class Author //#E
+    public class Author//#E
     {
-        public int AuthorId { get; set; }
+        public long AuthorId { get; set; }
         public string Name { get; set; }
 
         //------------------------------

@@ -1,3 +1,4 @@
+using Application.Core.Abstract;
 using Infrastructure.Persistance.Pg;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,16 +13,16 @@ public class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly BookContext _bookContext;
+    private readonly IBookContext _bookContext;
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(BookContext bookContext, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(IBookContext bookContext, ILogger<WeatherForecastController> logger)
     {
         _bookContext = bookContext;
         _logger = logger;
         
-        bookContext.Database.EnsureDeleted();
-        bookContext.Database.EnsureCreated();
+        // bookContext.Database.EnsureDeleted();
+        // bookContext.Database.EnsureCreated();
     }
 
     [HttpGet(Name = "GetWeatherForecast")]

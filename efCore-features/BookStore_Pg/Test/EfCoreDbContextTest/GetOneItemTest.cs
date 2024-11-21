@@ -1,10 +1,8 @@
-﻿using Domain.Books.Entities;
-using Infrastructure.Persistance.Pg.Tests.EfCoreDbContextTest;
-using Infrastructure.Persistance.Pg.Tests.TestHelpers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using Test.TestHelpers;
 using Xunit.Abstractions;
 
-namespace Infrastructure.Persistance.Pg.Tests.BookContextTest.Read;
+namespace Test.EfCoreDbContextTest;
 
 [Collection("Database collection")]
 public class GetOneItemTest

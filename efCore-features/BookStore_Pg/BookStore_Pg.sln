@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistance.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{0588B75B-9AB7-498C-ABCB-298C2C0F27D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Infrastructure.Persistance.Pg.Tests", "Infrastructure.Persistance.Pg.Tests\Infrastructure.Persistance.Pg.Tests.csproj", "{14BDE930-1908-4C55-A421-6ED621F6BCBA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{14BDE930-1908-4C55-A421-6ED621F6BCBA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{A3176F4A-B62D-4A61-B94A-A2D5E4EFD0EF}"
 EndProject
@@ -13,6 +13,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{940EA18D-13E6-4462-AA9F-1DD967214694}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Books", "Domain.Books\Domain.Books.csproj", "{44F863CB-DCE8-4AE6-A4EC-C022D903B22C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{98C505ED-A2D6-4DB8-8161-37A9B9B2C23F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Core", "Application.Core\Application.Core.csproj", "{7D574995-7F3F-4996-95BD-7FB34E47D785}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,10 +40,15 @@ Global
 		{44F863CB-DCE8-4AE6-A4EC-C022D903B22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44F863CB-DCE8-4AE6-A4EC-C022D903B22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44F863CB-DCE8-4AE6-A4EC-C022D903B22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D574995-7F3F-4996-95BD-7FB34E47D785}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D574995-7F3F-4996-95BD-7FB34E47D785}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D574995-7F3F-4996-95BD-7FB34E47D785}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D574995-7F3F-4996-95BD-7FB34E47D785}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{14BDE930-1908-4C55-A421-6ED621F6BCBA} = {0588B75B-9AB7-498C-ABCB-298C2C0F27D0}
 		{091767F3-3F65-4599-8273-A7AB05CEF85B} = {A3176F4A-B62D-4A61-B94A-A2D5E4EFD0EF}
 		{44F863CB-DCE8-4AE6-A4EC-C022D903B22C} = {940EA18D-13E6-4462-AA9F-1DD967214694}
+		{7D574995-7F3F-4996-95BD-7FB34E47D785} = {98C505ED-A2D6-4DB8-8161-37A9B9B2C23F}
 	EndGlobalSection
 EndGlobal

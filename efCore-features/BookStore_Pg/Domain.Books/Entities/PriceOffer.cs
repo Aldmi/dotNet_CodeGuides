@@ -3,14 +3,14 @@ namespace Domain.Books.Entities
 {
     public class PriceOffer //#A
     {
-        public int PriceOfferId { get; set; }
+        public long PriceOfferId { get; set; }
         public decimal NewPrice { get; set; }
         public string PromotionalText { get; set; }
 
         //-----------------------------------------------
         //Relationships
 
-        public int BookId { get; set; } //#b
+        public long BookId { get; set; } //#b
     }
 
     /***************************************************

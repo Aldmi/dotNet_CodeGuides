@@ -8,6 +8,8 @@ public class BookAuthorConfiguration : IEntityTypeConfiguration<BookAuthor>
 {
     public void Configure(EntityTypeBuilder<BookAuthor> builder)
     {
+        builder.HasKey(x => new {x.BookId, x.AuthorId});
+        
         builder.Property(a => a.Order).HasColumnName("order").HasColumnType("smallint");
     }
 }

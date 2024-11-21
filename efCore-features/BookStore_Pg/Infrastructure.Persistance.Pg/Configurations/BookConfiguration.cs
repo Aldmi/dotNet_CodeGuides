@@ -8,8 +8,8 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
 {
     public void Configure(EntityTypeBuilder<Book> builder)
     {
-        builder.ToTable("Books").HasKey(b => b.BookId);
-        builder.Property(b => b.BookId).HasColumnName("bookId");
+        builder.ToTable("Books").HasKey(b => b.Id);
+        builder.Property(b => b.Id).HasColumnName("bookId");
 
         builder.Property(a => a.Title).HasMaxLength(250);
         builder.Property(a => a.Description).HasMaxLength(250);

@@ -1,8 +1,9 @@
 ﻿using Domain.Books.Entities;
+using Infrastructure.Persistance.Pg;
 using Microsoft.EntityFrameworkCore;
 using DateOnly = System.DateOnly;
 
-namespace Infrastructure.Persistance.Pg.Tests.TestHelpers;
+namespace Test.TestHelpers;
 
 public static class EfTestData
 {
