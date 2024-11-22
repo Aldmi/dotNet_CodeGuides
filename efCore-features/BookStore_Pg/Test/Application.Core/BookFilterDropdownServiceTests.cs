@@ -1,5 +1,5 @@
-﻿using Application.Core.BookFeatures.Query.ListBooksQuery.BookFilterDropdownQuery;
-using Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
+﻿using Application.Core.BookFeatures.Query.BookFilterDropdownQuery;
+using Application.Core.BookFeatures.Query.QueryObjects;
 using Test.EfCoreDbContextTest;
 using Test.TestHelpers;
 using Xunit.Abstractions;

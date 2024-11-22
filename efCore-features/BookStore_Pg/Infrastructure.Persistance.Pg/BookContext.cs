@@ -46,6 +46,7 @@ public class BookContext(string connectionStr, IPublisher? _publisher= null, Act
         }
         return result;
     }
+    
 
     private async Task PublishDomainEventAsync()
     {
@@ -63,5 +64,16 @@ public class BookContext(string connectionStr, IPublisher? _publisher= null, Act
         {
             await _publisher!.Publish(domainEvent);
         }
+    }
+    
+    
+    public void EnsureDeleted()
+    {
+        Database.EnsureDeleted();
+    }
+
+    public void EnsureCreated()
+    {
+        Database.EnsureCreated();
     }
 }

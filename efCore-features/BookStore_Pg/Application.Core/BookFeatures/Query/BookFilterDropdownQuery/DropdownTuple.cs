@@ -1,5 +1,5 @@
 ﻿
-namespace Application.Core.BookServices;
+namespace Application.Core.BookFeatures.Query.BookFilterDropdownQuery;
 
 public class DropdownTuple
 {

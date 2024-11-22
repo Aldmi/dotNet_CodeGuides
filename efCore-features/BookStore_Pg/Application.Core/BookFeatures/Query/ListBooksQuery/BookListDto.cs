@@ -1,4 +1,4 @@
-﻿namespace Application.Core.BookServices;
+﻿namespace Application.Core.BookFeatures.Query.ListBooksQuery;
 
 public class BookListDto
 {

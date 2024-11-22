@@ -1,8 +1,7 @@
 ﻿using Application.Core.Abstract;
-using Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
-using Application.Core.BookServices;
+using Application.Core.BookFeatures.Query.QueryObjects;
 
-namespace Application.Core.BookFeatures.Query.ListBooksQuery.BookFilterDropdownQuery;
+namespace Application.Core.BookFeatures.Query.BookFilterDropdownQuery;
 
 public class BookFilterDropdownQuery(IBookContext _db)
 {

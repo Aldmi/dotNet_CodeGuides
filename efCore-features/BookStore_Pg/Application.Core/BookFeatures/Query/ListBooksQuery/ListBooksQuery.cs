@@ -1,7 +1,6 @@
 ﻿using Application.Core.Abstract;
-using Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
-using Application.Core.BookServices;
-using Application.Core.Shared.QueryObjects;
+using Application.Core.BookFeatures.Query.QueryObjects;
+using Application.Core.Common.QueryObjects;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Core.BookFeatures.Query.ListBooksQuery;

@@ -1,7 +1,7 @@
-﻿using Application.Core.BookServices;
+﻿using Application.Core.BookFeatures.Query.ListBooksQuery;
 using Domain.Books.Entities;
 
-namespace Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
+namespace Application.Core.BookFeatures.Query.QueryObjects;
 
 public static class BookListDtoSelect
 {

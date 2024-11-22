@@ -6,7 +6,7 @@ namespace Domain.Books.Entities
 {
     public class Book : AgregateRoot //#A
     {
-        public int BookId { get; set; } //#B
+        //public long BookId { get; set; } //#B
         public string Title { get; set; }
         public string Description { get; set; }
         public DateOnly PublishedOn { get; set; }

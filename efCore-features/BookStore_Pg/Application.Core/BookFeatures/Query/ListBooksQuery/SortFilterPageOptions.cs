@@ -1,9 +1,9 @@
 ﻿
 
 
-using Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
+using Application.Core.BookFeatures.Query.QueryObjects;
 
-namespace Application.Core.BookServices
+namespace Application.Core.BookFeatures.Query.ListBooksQuery
 {
     public class SortFilterPageOptions
     {

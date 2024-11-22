@@ -1,6 +1,6 @@
-﻿using Application.Core.BookServices;
+﻿using Application.Core.BookFeatures.Query.ListBooksQuery;
 
-namespace Application.Core.BookFeatures.Query.ListBooksQuery.QueryObjects;
+namespace Application.Core.BookFeatures.Query.QueryObjects;
 
 public enum BooksFilterBy
 {

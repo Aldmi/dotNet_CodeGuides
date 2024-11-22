@@ -1,7 +1,7 @@
 ﻿using Domain.Books.DomainEvents;
 using MediatR;
 
-namespace Application.Core.BookFeatures.DomainEventHandler;
+namespace Application.Core.BookFeatures.Command.CreateBook;
 
 public class SendEmailCreateBookDomainEventHandler : INotificationHandler<CreateBookDomainEvent>
 {

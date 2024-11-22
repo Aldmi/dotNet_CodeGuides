@@ -1,4 +1,5 @@
 using Application.Core.Abstract;
+using Application.Core.BookFeatures.Command.CreateBook;
 using Infrastructure.Persistance.Pg;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,20 +15,29 @@ public class WeatherForecastController : ControllerBase
     };
 
     private readonly IBookContext _bookContext;
+    private readonly CreateBookService _createBookService;
     private readonly ILogger<WeatherForecastController> _logger;
 
-    public WeatherForecastController(IBookContext bookContext, ILogger<WeatherForecastController> logger)
+    public WeatherForecastController(
+        IBookContext bookContext,
+        CreateBookService createBookService,
+        ILogger<WeatherForecastController> logger)
     {
         _bookContext = bookContext;
+        _createBookService = createBookService;
         _logger = logger;
         
-        // bookContext.Database.EnsureDeleted();
-        // bookContext.Database.EnsureCreated();
+        _bookContext.EnsureDeleted();
+        _bookContext.EnsureCreated();
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public IEnumerable<WeatherForecast> Get()
+    public async Task<IEnumerable<WeatherForecast>> Get()
     {
+
+        await _createBookService.CreateTestBook();
+        
+        
         return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),

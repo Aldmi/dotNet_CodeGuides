@@ -1,4 +1,4 @@
-﻿namespace Application.Core.Shared.QueryObjects;
+﻿namespace Application.Core.Common.QueryObjects;
 
 public static class GenericPaging
 {

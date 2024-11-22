@@ -44,7 +44,7 @@
 Если реализовать фабрику DbContext в проекте c самим `ApplicationDbContext`  `Infrastructure.Persistence.Pg`
 тогда можно отказаться от зависимости `Microsoft.EntityFrameworkCore.Design` в startup проекте `WebUi`
 
-`dotnet ef migrations remove --project Infrastructure.Persistence.Pg --context ApplicationDbContext`
+`dotnet ef migrations list --project Infrastructure.Persistence.Pg --context ApplicationDbContext`
 
 
 
