@@ -16,7 +16,7 @@ public class DomainEntity : Entity
         _domainEvents.Add(domainEvent);  
     }
 
-    public List<IDomainEvent> DomainEvents => _domainEvents.ToList();
+    public IReadOnlyCollection<IDomainEvent> DomainEvents => _domainEvents.ToList();
 
 
     public void ClearDomainEvents()

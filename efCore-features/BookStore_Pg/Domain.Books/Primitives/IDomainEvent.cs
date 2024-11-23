@@ -2,7 +2,7 @@
 
 namespace Domain.Books.Primitives;
 
-public interface IDomainEvent : INotification
+public interface IDomainEvent : INotification //Mediatr.Contract
 {
     
 }

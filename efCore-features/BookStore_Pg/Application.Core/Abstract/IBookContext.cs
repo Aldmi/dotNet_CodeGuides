@@ -11,7 +11,7 @@ public interface IBookContext
     DbSet<Tag> Tags { get; }
     DbSet<PriceOffer> PriceOffers { get; }
 
-    Task<int> SaveChangesAsync(CancellationToken token = default);
+    Task<int> SaveChangesAsync(CancellationToken ct = default);
     
     
     void EnsureDeleted();

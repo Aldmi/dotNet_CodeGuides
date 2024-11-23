@@ -26,21 +26,38 @@ public class DeleteBookTest
     public async Task Delete_Tracking_CascadeDelete_Ok()
     {
         //arrange
-        await using var context = _fixture.DbContextFactoryWithSqlLogs(_output.WriteLine);
-        var book = await context.Books
-            .Include(b=> b.Promotion)
-            .Include(b=> b.Reviews)
-            .Include(b=> b.Tags)
-            .Include(b=> b.AuthorsLink)
-            .SingleAsync(b => b.Title == "Quantum Networking");
+        Book currentBook;
+        await using (var context =  _fixture.DbContextFactoryWithSqlLogs(_output.WriteLine))
+        {
+            currentBook = await context.Books
+                .Include(b=> b.Promotion)
+                .Include(b=> b.Reviews)
+                .Include(b=> b.Tags)
+                .Include(b=> b.AuthorsLink)
+                .SingleAsync(b => b.Title == "Quantum Networking");
         
-        //act
-        //Удаление из всех зависмых таблиц
-        context.Books.Remove(book);
-        var n= await context.SaveChangesAsync();
+            //act
+            //Удаление из всех зависмых таблиц силами самого EF_core. тк он знает про все связи.
+            context.Books.Remove(currentBook);
+            var entries = context.ChangeTracker.Entries().ToList(); //DEBUG
+            var n= await context.SaveChangesAsync();
+        }
+
         
         //assert
-        n.Should().Be(6);
+        //состояние после удаления
+        await using (var context = _fixture.DbContextFactory())
+        {
+            var book = await context.Books.SingleOrDefaultAsync(b => b.Id == currentBook.Id);
+            var ba = await context.Set<BookAuthor>().Where(ba => ba.BookId == currentBook.Id).ToListAsync();
+            var priceOffer =await context.PriceOffers.SingleOrDefaultAsync(po => po.PriceOfferId == currentBook.Promotion.PriceOfferId);
+            var rewies = await context.Set<Review>().Where(review => review.BookId == currentBook.Id).ToListAsync();
+
+            book.Should().BeNull();
+            ba.Count.Should().Be(0);
+            priceOffer.Should().BeNull();
+            rewies.Count.Should().Be(0);
+        }
     }
     
     
@@ -60,7 +77,7 @@ public class DeleteBookTest
                 .SingleAsync(b => b.Title == "Quantum Networking");
 
             currentBook.Should().NotBeNull();
-            currentBook.AuthorsLink.Count.Should().Be(1);
+            currentBook.AuthorsLink.Count.Should().Be(2);
             currentBook.Tags.Count.Should().Be(1);
             currentBook.Promotion.NewPrice.Should().Be(219);
             currentBook.Reviews.Count.Should().Be(2);

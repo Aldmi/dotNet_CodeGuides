@@ -37,41 +37,41 @@ public class BookContext(string connectionStr, IPublisher? _publisher= null, Act
     }
 
 
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+    public override async Task<int> SaveChangesAsync(CancellationToken ct = new CancellationToken())
     {
-        int result= await base.SaveChangesAsync(cancellationToken);
+        int result= await base.SaveChangesAsync(ct);
         if (_publisher is not null)
         {
-            await PublishDomainEventAsync();
+            await PublishDomainEventAsync(ct);
         }
         return result;
     }
     
 
-    private async Task PublishDomainEventAsync()
+    private async Task PublishDomainEventAsync(CancellationToken ct)
     {
         var domainEvents = ChangeTracker
             .Entries<DomainEntity>()
             .Select(e => e.Entity)
             .SelectMany(e =>
-            {
-                List<IDomainEvent> domainEvents = e.DomainEvents;
+            {   
+                var domainEvents = e.DomainEvents;
                 e.ClearDomainEvents();
                 return domainEvents;
             }).ToList();
 
         foreach (var domainEvent in domainEvents)
         {
-            await _publisher!.Publish(domainEvent);
+            await _publisher!.Publish(domainEvent, ct);
         }
     }
     
-    
+    //TODO: для тестирования
     public void EnsureDeleted()
     {
         Database.EnsureDeleted();
     }
-
+    //TODO: для тестирования
     public void EnsureCreated()
     {
         Database.EnsureCreated();
