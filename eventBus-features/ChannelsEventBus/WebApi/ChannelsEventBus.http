@@ -1,0 +1,6 @@
+@ChannelsEventBus_HostAddress = http://localhost:5216
+
+GET {{ChannelsEventBus_HostAddress}}/addUser/
+Accept: application/json
+
+###
