@@ -1,0 +1,10 @@
+@HybridCacheDemo_HostAddress = http://localhost:5280
+
+### 
+GET {{HybridCacheDemo_HostAddress}}/weather/London
+Accept: application/json
+
+###
+GET {{HybridCacheDemo_HostAddress}}/weather/London
+Accept: application/json
+
