@@ -3,7 +3,7 @@ namespace Domain.Books.Entities
 {
     public class Review //#L
     {
-        public int ReviewId { get; set; }
+        public long ReviewId { get; set; }
         public string VoterName { get; set; }
         public int NumStars { get; set; }
         public string? Comment { get; set; }
@@ -11,7 +11,7 @@ namespace Domain.Books.Entities
         //-----------------------------------------
         //Relationships
 
-        public int BookId { get; set; } //#M
+        public long BookId { get; set; } //#M
     }
 
     /*******************************************************

@@ -3,8 +3,8 @@ namespace Domain.Books.Entities
 {
     public class BookAuthor //#G
     {
-        public int BookId { get; set; } //#H
-        public int AuthorId { get; set; } //#H
+        public long BookId { get; set; } //#H
+        public long AuthorId { get; set; } //#H
         public byte Order { get; set; } //#I
 
         //-----------------------------

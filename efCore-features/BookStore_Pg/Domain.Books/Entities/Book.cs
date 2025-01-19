@@ -1,9 +1,12 @@
 ﻿
+using Domain.Books.DomainEvents;
+using Domain.Books.Primitives;
+
 namespace Domain.Books.Entities
 {
-    public class Book //#A
+    public class Book : AgregateRoot //#A
     {
-        public int BookId { get; set; } //#B
+        //public long BookId { get; set; } //#B
         public string Title { get; set; }
         public string Description { get; set; }
         public DateOnly PublishedOn { get; set; }
@@ -19,6 +22,17 @@ namespace Domain.Books.Entities
         public ICollection<Review>? Reviews { get; set; } //#D
         public ICollection<Tag> Tags { get; set; } //#E
         public ICollection<BookAuthor> AuthorsLink { get; set; } //#F
+
+
+        public void BuisnesLogicInDomainModel()
+        {
+            RaiseDomainEvent(new CreateBookDomainEvent(Id, Title));
+        }
+
+        public static Book Create(long id)
+        {
+            return new Book{Id = id};
+        }
     }
 
     /****************************************************#

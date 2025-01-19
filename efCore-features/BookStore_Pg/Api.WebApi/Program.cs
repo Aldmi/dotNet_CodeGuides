@@ -1,4 +1,5 @@
 using Api.WebApi.Options.Application;
+using Application.Core;
 using Infrastructure.Persistance.Pg;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,6 +23,7 @@ else {
 
 // Add services to the container.
 builder.Services.AddPersistence(appOptions.PgDbOption, LogPersistence);
+builder.Services.AddApplication();
 
 builder.Services.AddControllers();
 

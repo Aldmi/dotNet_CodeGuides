@@ -1,0 +1,14 @@
+@WebApi_HostAddress = http://localhost:5011
+
+GET {{WebApi_HostAddress}}/orders/
+Accept: application/json
+
+###
+GET {{WebApi_HostAddress}}/getProducts?pageSize=3&pageNumber=1&searchPattern=V&sortOrder=name_desc
+Accept: application/json
+
+
+###
+GET {{WebApi_HostAddress}}/getProducts?pageSize=3&pageNumber=5
+Accept: application/json
+

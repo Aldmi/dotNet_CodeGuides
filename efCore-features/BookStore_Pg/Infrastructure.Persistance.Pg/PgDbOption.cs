@@ -1,5 +1,3 @@
-
-
 using FluentValidation;
 
 namespace Infrastructure.Persistance.Pg;
