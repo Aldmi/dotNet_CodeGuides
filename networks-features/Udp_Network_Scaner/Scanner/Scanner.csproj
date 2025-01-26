@@ -1,14 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+<<<<<<< HEAD
         <OutputType>Exe</OutputType>
+=======
+>>>>>>> cc965f98f0d5715dfcdf30a26dae346ad467caaa
         <TargetFramework>net9.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+<<<<<<< HEAD
     <ItemGroup>
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
 
+=======
+>>>>>>> cc965f98f0d5715dfcdf30a26dae346ad467caaa
 </Project>

@@ -12,7 +12,11 @@
 
 
 
+<<<<<<< HEAD
 ### 2. Payload - ответ тэга
+=======
+### 2. Payload
+>>>>>>> cc965f98f0d5715dfcdf30a26dae346ad467caaa
 
     tagName_MAC_Ip
     
