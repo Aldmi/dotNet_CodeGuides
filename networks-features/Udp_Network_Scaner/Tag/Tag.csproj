@@ -7,11 +7,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-<<<<<<< HEAD
     <ItemGroup>
       <ProjectReference Include="..\Contracts\Contracts.csproj" />
     </ItemGroup>
 
-=======
->>>>>>> cc965f98f0d5715dfcdf30a26dae346ad467caaa
 </Project>
