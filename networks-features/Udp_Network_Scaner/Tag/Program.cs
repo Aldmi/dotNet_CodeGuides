@@ -18,23 +18,24 @@ var tagIpAddress= NetworkHelpers.GetLocalIpAddress("192.168.1");
 Task tagTask = Task.Factory.StartNew(async () =>
 	{
 		UdpClient listener = new UdpClient(listenPort) { EnableBroadcast = true };
-		IPEndPoint groupEp = new IPEndPoint(IPAddress.Any, listenPort); //Принимаю broadcast
+		IPEndPoint groupEp = new IPEndPoint(IPAddress.Any, listenPort); //Принимаю broadcast.
 		try
 		{
 			while (!cts.IsCancellationRequested)
 			{
 				Console.WriteLine("Waiting scanner query");
 				byte[] bytes = listener.Receive(ref groupEp); //TODO: заменить на ReceiveAsync
-				
+				var scannerIpAddress = groupEp.Address;
 				Console.WriteLine($"Received broadcast from scanner {groupEp} :");
                 //Обработка broadcast сообщения от scanner
 				var scannerPayload= ScannerPayload.FromBuffer(bytes);
 				Console.WriteLine($"ScannerPayload {scannerPayload}");
 
-				//Отправка ответа сканеру.
-				IPEndPoint epScanner = new IPEndPoint(IPAddress.Parse(scannerPayload.IpAddress), scannerPayload.ListenPortNumber); //берет из запроса ip сканера и порт (куда отправить ответ)
-				var tagPayload = TagPayload.Create(tagName, tagIpAddress, macAddress);
-				await SendPayload(epScanner, tagPayload);
+				//Создание и Отправка ответа сканеру.
+				var epScanner = new IPEndPoint(scannerIpAddress, scannerPayload.ListenPortNumber); //берет из запроса ip сканера и порт (куда отправить ответ)
+				var tagPayload = TagPayload.Create(tagName, macAddress);
+				var sendBytes= listener.Send(tagPayload.ToBuffer(), epScanner);
+				Console.WriteLine($"Sent message to scanner {sendBytes} epScanner='{epScanner}' tagPayload= '{tagPayload}'");
 			}
 		}
 		catch (SocketException e)
@@ -66,15 +67,3 @@ catch (Exception e)
 
 Console.WriteLine("Tag Stopped");
 Console.ReadKey();
-
-
-
-async ValueTask SendPayload(IPEndPoint ep, TagPayload tagPayload)
-{
-	using Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Dgram, ProtocolType.Udp)
-		{ EnableBroadcast = true };
-	byte[] buffer = tagPayload.ToBuffer();
-	
-	var sendBytes = await socket.SendToAsync(buffer, ep, cts.Token); //TODO: cts.Token - как правильно завершать
-	Console.WriteLine($"Sending message to scanner {sendBytes}");
-}

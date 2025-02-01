@@ -5,18 +5,18 @@ using System.Text;
 namespace Contracts;
 
 
-public record TagPayload(string Name, string IpAddress, string MacAddress, DateTime CreatedAt)
+public record TagPayload(string Name, string MacAddress, DateTime CreatedAt)
 {
 	
-	public static TagPayload Create(string name, string ipAddress, string macAddress)
+	public static TagPayload Create(string name, string macAddress)
 	{
-		var payload = new TagPayload(name, ipAddress, macAddress, DateTime.UtcNow);
+		var payload = new TagPayload(name, macAddress, DateTime.UtcNow);
 		return payload;
 	}
 	
 	public byte[] ToBuffer()
 	{
-		string formatString = $"{Name}_{IpAddress}_{MacAddress}_{CreatedAt}";
+		string formatString = $"{Name}_{MacAddress}_{CreatedAt}";
 		return Encoding.ASCII.GetBytes(formatString);
 	}
 	
@@ -25,11 +25,11 @@ public record TagPayload(string Name, string IpAddress, string MacAddress, DateT
 	{
 		var str= Encoding.ASCII.GetString(buffer, 0, buffer.Length);
 		var parts = str.Split('_');
-		if (parts.Length != 4)
+		if (parts.Length != 3)
 		{
 			throw new ArgumentException("invalid buffer");
 		}
 		
-		return new TagPayload(parts[0], parts[1], parts[2], DateTime.Parse(parts[3]));
+		return new TagPayload(parts[0], parts[1], DateTime.Parse(parts[2]));
 	}
 }

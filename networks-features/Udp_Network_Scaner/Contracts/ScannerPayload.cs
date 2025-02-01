@@ -3,18 +3,17 @@ using System.Text;
 namespace Contracts;
 
 
-public record ScannerPayload(string IpAddress, int ListenPortNumber, DateTime CreatedAt)
+public record ScannerPayload(int ListenPortNumber, DateTime CreatedAt)
 {
-	public static ScannerPayload Create(string subNetworkAddress, int portNumber)
+	public static ScannerPayload Create(int portNumber)
 	{
-		var localIp =  NetworkHelpers.GetLocalIpAddress(subNetworkAddress);
-		var payload = new ScannerPayload(localIp, portNumber, DateTime.UtcNow);
+		var payload = new ScannerPayload(portNumber, DateTime.UtcNow);
 		return payload;
 	}
 	
 	public byte[] ToBuffer()
 	{
-		string formatString = $"{IpAddress}_{ListenPortNumber}_{CreatedAt}";
+		string formatString = $"{ListenPortNumber}_{CreatedAt}";
 		return Encoding.ASCII.GetBytes(formatString);
 	}
 	
@@ -22,10 +21,10 @@ public record ScannerPayload(string IpAddress, int ListenPortNumber, DateTime Cr
 	{
 		var str= Encoding.ASCII.GetString(buffer, 0, buffer.Length); //TODO: можно ли преобразовать в Span<string>
 		var parts = str.Split('_');
-		if (parts.Length != 3)
+		if (parts.Length != 2)
 		{
 			throw new ArgumentException("invalid buffer");
 		}
-		return new ScannerPayload(parts[0], int.Parse(parts[1]), DateTime.Parse(parts[2]));
+		return new ScannerPayload (int.Parse(parts[0]), DateTime.Parse(parts[1]));
 	}
 }
