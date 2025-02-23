@@ -18,11 +18,15 @@ var tagIpAddress= NetworkHelpers.GetLocalIpAddress("192.168.1");
 Task tagTask = Task.Factory.StartNew(async () =>
 	{
 		UdpClient listener = new UdpClient(listenPort) { EnableBroadcast = true };
-		IPEndPoint groupEp = new IPEndPoint(IPAddress.Any, listenPort); //Принимаю broadcast.
+		//Принимаю broadcast.
+		//IPAddress.Loopback - позволяет серверу принимать пакеты, только в локальной сети
+		//IPAddress.Any - позволяет серверу принимать пакеты, отправленные на любой из IP-адресов машины
+		IPEndPoint groupEp = new IPEndPoint(IPAddress.Loopback, listenPort); 
 		try
 		{
 			while (!cts.IsCancellationRequested)
 			{
+				//Слушаем listenPort для получения заапроса от сканера
 				Console.WriteLine("Waiting scanner query");
 				byte[] bytes = listener.Receive(ref groupEp); //TODO: заменить на ReceiveAsync
 				var scannerIpAddress = groupEp.Address;

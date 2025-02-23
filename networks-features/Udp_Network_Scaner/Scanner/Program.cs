@@ -21,7 +21,7 @@ string subNetworkAddress = "192.168.1"; //адрес рассылки для п�
 const int listenPort = 11001;
 int portRequest = 11000;
 
-TimeSpan scanPeriod = TimeSpan.FromSeconds(1);
+TimeSpan scanPeriod = TimeSpan.FromSeconds(2);
 
 
 //Sender-----------------------------------------------------------------
