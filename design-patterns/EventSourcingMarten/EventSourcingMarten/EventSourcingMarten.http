@@ -1,0 +1,51 @@
+@HostAddress = http://localhost:5108
+
+# Получить заказ
+GET {{HostAddress}}/orders/01959ac9-3da6-7e1c-9e11-a238f0335015
+Accept: application/json
+
+###
+
+# Получить все заказы
+GET {{HostAddress}}/orders/
+Accept: application/json
+
+###
+
+# Create Order
+POST {{HostAddress}}/orders/
+Content-Type: application/json
+
+{
+  "ProductName" : "Bred",
+  "DeliveryAddress" : "Russia"
+}
+
+###
+# DeliveryAddress Update
+POST {{HostAddress}}/orders/01959ac9-3da6-7e1c-9e11-a238f0335015/address
+Content-Type: application/json
+
+{
+  "DeliveryAddress" : "Russia_Updated"
+}
+###
+
+###
+# dispatch
+POST {{HostAddress}}/orders/01959ac9-3da6-7e1c-9e11-a238f0335015/dispatch
+Content-Type: application/json
+
+###
+
+# outfordelivery
+POST {{HostAddress}}/orders/01959ac9-3da6-7e1c-9e11-a238f0335015/outfordelivery
+Content-Type: application/json
+
+###
+
+# delivererd
+POST {{HostAddress}}/orders/01959ac9-3da6-7e1c-9e11-a238f0335015/delivererd
+Content-Type: application/json
+
+###

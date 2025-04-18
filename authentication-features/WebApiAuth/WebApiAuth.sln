@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CookiesAuthorization", "CookiesAuthorization\CookiesAuthorization.csproj", "{83CB29BA-CF36-4568-BCE8-DD3A0F3B0CE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JwtBearerAuthorization", "JwtBearerAuthorization\JwtBearerAuthorization.csproj", "{FBBE7DD8-C816-456B-8299-E5EA97D63334}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAuthorizaton", "MultiAuthorizaton\MultiAuthorizaton.csproj", "{E40A9D6E-1B15-4452-9DEB-D28E363B0968}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{83CB29BA-CF36-4568-BCE8-DD3A0F3B0CE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83CB29BA-CF36-4568-BCE8-DD3A0F3B0CE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83CB29BA-CF36-4568-BCE8-DD3A0F3B0CE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83CB29BA-CF36-4568-BCE8-DD3A0F3B0CE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FBBE7DD8-C816-456B-8299-E5EA97D63334}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBBE7DD8-C816-456B-8299-E5EA97D63334}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBBE7DD8-C816-456B-8299-E5EA97D63334}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBBE7DD8-C816-456B-8299-E5EA97D63334}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E40A9D6E-1B15-4452-9DEB-D28E363B0968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E40A9D6E-1B15-4452-9DEB-D28E363B0968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E40A9D6E-1B15-4452-9DEB-D28E363B0968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E40A9D6E-1B15-4452-9DEB-D28E363B0968}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

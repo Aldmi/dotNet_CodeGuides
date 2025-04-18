@@ -8,22 +8,15 @@ namespace TasksSample.Tests;
 ///Контроль Времени выполнения задачи.
 /// WaitAsync - возвращает задачу которая успешно завершится если завершится вложенная задача или вылетит TimeoutException.
 /// </summary>
-public class TaskExecutionTimeControlTest
+public class TaskExecutionTimeControlTest(ITestOutputHelper testOutputHelper)
 {
-    private readonly ITestOutputHelper _testOutputHelper;
-
-    public TaskExecutionTimeControlTest(ITestOutputHelper testOutputHelper)
-    {
-        _testOutputHelper = testOutputHelper;
-    }
-
     [Fact]
     public async Task Long_Running_Expected_TimeoutException()
     {
         //arrange
         var task1 = Task.Delay(TimeSpan.FromSeconds(1));
         Func<Task> act = () => task1.WaitAsync(TimeSpan.FromSeconds(0.8));
-        
+
         //act
         //assert
         await act.Should().ThrowAsync<TimeoutException>();
@@ -55,7 +48,7 @@ public class TaskExecutionTimeControlTest
             for (int i = 0; i < 10; i++)
             {
                 await Task.Delay(TimeSpan.FromSeconds(0.2));
-                _testOutputHelper.WriteLine($"in task3 {i}");
+                testOutputHelper.WriteLine($"in task3 {i}");
             }
             return true;
         };
@@ -66,7 +59,7 @@ public class TaskExecutionTimeControlTest
         }
         catch (TimeoutException e)
         {
-            _testOutputHelper.WriteLine(e.ToString());
+            testOutputHelper.WriteLine(e.ToString());
         }
 
         //_testOutputHelper.WriteLine($"in main code {task1.Status}");
@@ -90,22 +83,22 @@ public class TaskExecutionTimeControlTest
                     {
                         cts.Token.ThrowIfCancellationRequested();
                         await Task.Delay(TimeSpan.FromSeconds(0.2), cts.Token);
-                        _testOutputHelper.WriteLine($"in task {i}");
+                        testOutputHelper.WriteLine($"in task {i}");
                     }
                     return true;
                 }, cts.Token);
             }
             catch (TaskCanceledException e)
             {
-                _testOutputHelper.WriteLine(e.ToString());
+                testOutputHelper.WriteLine(e.ToString());
             }
             catch (Exception e)
             {
-                _testOutputHelper.WriteLine(e.ToString());
+                testOutputHelper.WriteLine(e.ToString());
             }
         }
         
-        _testOutputHelper.WriteLine($"in main code");
+        testOutputHelper.WriteLine($"in main code");
         await Task.Delay(TimeSpan.FromSeconds(10));
     }
 
