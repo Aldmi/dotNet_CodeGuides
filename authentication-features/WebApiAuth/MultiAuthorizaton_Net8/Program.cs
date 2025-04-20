@@ -13,13 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Настройка политик авторизации
 builder.Services.AddAuthorization(opts => {
-    // Общие политики (могут использовать обе схемы)
-    opts.DefaultPolicy = new AuthorizationPolicyBuilder()
-        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme)
-        .RequireAuthenticatedUser()
-        .Build();
-    
-    // Политики для cookies
+    // Политики для Web
     opts.AddPolicy("OnlyForLondon", policy => {
         policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
             .RequireClaim(ClaimTypes.Locality, "Лондон", "London");
@@ -30,10 +24,24 @@ builder.Services.AddAuthorization(opts => {
             .RequireClaim("company", "Microsoft");
     });
     
-    // Политика только для JWT
-    opts.AddPolicy("api", policy => {
+    // Политика для Api
+    opts.AddPolicy("api_access", policy => {
         policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
             .RequireClaim("api_access", "Yes");
+    });
+    
+    // Политика для Web + api
+    opts.AddPolicy("api_web_access", policy =>
+    {
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme,
+                JwtBearerDefaults.AuthenticationScheme)
+            .RequireAuthenticatedUser()
+            .RequireAssertion(context =>
+            {
+                var hasClaim = context.User.HasClaim("api_access", "Yes") ||
+                               context.User.HasClaim("company", "Microsoft");
+                return hasClaim;
+            });
     });
 });
 
@@ -189,14 +197,17 @@ app.Map("/", [Authorize](HttpContext context) =>
     return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
 });
 
-// доступ только для City = London
+// web+api доступ
+app.MapGet("/hello_api_jwt", [Authorize("api_web_access")]() => "web + api Hello");
+
+// web "OnlyForLondon"
 app.Map("/london", [Authorize("OnlyForLondon")]() => "You are living in London");
 
-// доступ только для Company = Microsoft
-app.Map("/microsoft", [Authorize(Policy = "OnlyForMicrosoft")]() => "You are working in Microsoft");
+// web "OnlyForMicrosoft"
+app.Map("/microsoft", [Authorize("OnlyForMicrosoft")]() => "You are working in Microsoft");
 
 // api доступ
-app.MapGet("/hello_jwt", [Authorize]() => "Hello World!");
+app.MapGet("/hello_jwt", [Authorize("api_access")]() => "api Hello");
 
 
 app.Run();

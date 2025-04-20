@@ -1,5 +1,5 @@
 @HostAddress = http://localhost:5014
-@JwtToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfYWNjZXNzIjoiWWVzIiwiZXhwIjoxNzQ1MTMzMTQ3LCJpc3MiOiJNeUF1dGhTZXJ2ZXIiLCJhdWQiOiJNeUF1dGhDbGllbnQifQ.r5zPsCHhNrhP6ZySPjFyzjLdDbMPQVfggGYWY4oYGyY
+@JwtToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfYWNjZXNzIjoiWWVzIiwiZXhwIjoxNzYyNDIwMzM1LCJpc3MiOiJNeUF1dGhTZXJ2ZXIiLCJhdWQiOiJNeUF1dGhDbGllbnQifQ.2JnFI0vLuWT7Z_COlWRpGWRCn_Z6AkB7muu0479kxCs
 
 
 ### 1. Сначала получаем токен
@@ -11,5 +11,19 @@ Content-Type: application/json
 ### jwt endpoint
 
 GET {{HostAddress}}/hello_jwt/
+Accept: application/json
+Authorization: Bearer {{JwtToken}}
+
+
+### jwt+api endpoint
+
+GET {{HostAddress}}/hello_api_jwt/
+Accept: application/json
+Authorization: Bearer {{JwtToken}}
+
+
+### web endpoint (долден быть 401)
+
+GET {{HostAddress}}/london/
 Accept: application/json
 Authorization: Bearer {{JwtToken}}
