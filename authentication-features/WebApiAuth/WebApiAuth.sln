@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAuthorizaton", "MultiA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{9593A2CD-073B-4CEF-B978-59E02722CD56}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAuthorizaton_Net8", "MultiAuthorizaton_Net8\MultiAuthorizaton_Net8.csproj", "{FFB78555-FB4F-4223-9D4B-D5A98A11AD29}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{9593A2CD-073B-4CEF-B978-59E02722CD56}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9593A2CD-073B-4CEF-B978-59E02722CD56}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9593A2CD-073B-4CEF-B978-59E02722CD56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFB78555-FB4F-4223-9D4B-D5A98A11AD29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFB78555-FB4F-4223-9D4B-D5A98A11AD29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFB78555-FB4F-4223-9D4B-D5A98A11AD29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFB78555-FB4F-4223-9D4B-D5A98A11AD29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

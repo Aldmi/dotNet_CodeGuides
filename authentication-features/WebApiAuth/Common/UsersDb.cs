@@ -2,7 +2,13 @@ using System.IO.Enumeration;
 
 namespace Common;
 
-public record Person(string Email, string Password, string City, string Company);
+public record Person(string Email, string Password, string City, string Company)
+{
+	public string Email { get; } = Email;
+	public string Password { get; } = Password;
+	public string City { get; } = City;
+	public string Company { get; } = Company;
+}
 
 public class UsersDb
 {

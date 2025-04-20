@@ -1,5 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using Common;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -10,31 +11,40 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Настройка политик авторизации
 builder.Services.AddAuthorization(opts => {
- 
-    //политики для cookies
+    // Общие политики (могут использовать обе схемы)
+    opts.DefaultPolicy = new AuthorizationPolicyBuilder()
+        .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme, CookieAuthenticationDefaults.AuthenticationScheme)
+        .RequireAuthenticatedUser()
+        .Build();
+    
+    // Политики для cookies
     opts.AddPolicy("OnlyForLondon", policy => {
-        policy.RequireClaim(ClaimTypes.Locality, "Лондон", "London");
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+            .RequireClaim(ClaimTypes.Locality, "Лондон", "London");
     });
+    
     opts.AddPolicy("OnlyForMicrosoft", policy => {
-        policy.RequireClaim("company", "Microsoft");
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+            .RequireClaim("company", "Microsoft");
     });
     
     // Политика только для JWT
     opts.AddPolicy("api", policy => {
-        policy.RequireClaim("api_access", "Yes")
-            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+            .RequireClaim("api_access", "Yes");
     });
 });
 
-// Настройка аутентификации (оба типа)
+
+// Настройка аутентификации
 builder.Services.AddAuthentication(options =>
     {
-        // Указываем схемы по умолчанию (порядок важен!)
-        options.DefaultScheme = "JWT_OR_COOKIE";
+        options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
         options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     })
-    // Добавляем cookie-аутентификацию
     .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
     {
         options.LoginPath = "/login";
@@ -42,7 +52,6 @@ builder.Services.AddAuthentication(options =>
         options.SlidingExpiration = true;
         options.Cookie.HttpOnly = true;
     })
-    // Добавляем JWT-аутентификацию
     .AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, options =>
     {
         options.TokenValidationParameters = new TokenValidationParameters
@@ -54,22 +63,25 @@ builder.Services.AddAuthentication(options =>
             ValidateLifetime = true,
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             ValidateIssuerSigningKey = true,
+            // Важно для .NET 8:
+            ClockSkew = TimeSpan.Zero // Убираем запас времени для expiration
+        };
+        
+        // Для отладки
+        options.Events = new JwtBearerEvents
+        {
+            OnAuthenticationFailed = context =>
+            {
+                Console.WriteLine($"Authentication failed: {context.Exception}");
+                return Task.CompletedTask;
+            },
+            OnTokenValidated = context =>
+            {
+                Console.WriteLine("Token validated successfully");
+                return Task.CompletedTask;
+            }
         };
     });
-    // Добавляем политику, которая проверяет обе схемы
-    // .AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
-    // {
-    //     options.ForwardDefaultSelector = context =>
-    //     {
-    //         // Если есть заголовок Authorization с Bearer токеном - используем JWT
-    //         string authorization = context.Request.Headers.Authorization;
-    //         if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
-    //             return JwtBearerDefaults.AuthenticationScheme;
-    //         
-    //         // Иначе используем cookie
-    //         return CookieAuthenticationDefaults.AuthenticationScheme;
-    //     };
-    // });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<UsersDb>();
@@ -80,6 +92,7 @@ app.UseAuthentication();   // добавление middleware аутентифи
 app.UseAuthorization();   // добавление middleware авторизации 
 
 
+//cookies -------------------------------------------------------------------------
 app.MapGet("/login", async (HttpContext context) =>
 {
 	context.Response.ContentType = "text/html; charset=utf-8";
@@ -142,13 +155,6 @@ app.MapGet("/logout", async (HttpContext context) =>
     return Results.Redirect("/login");
 });
 
-app.Map("/", [Authorize](HttpContext context) =>
-{
-    var login = context.User.FindFirst(ClaimTypes.Name);
-    var city = context.User.FindFirst(ClaimTypes.Locality);
-    var company = context.User.FindFirst("company");
-    return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
-});
 
 
 
@@ -175,6 +181,14 @@ app.MapPost("/jwt", ( [FromServices]UsersDb userDb) =>
 
 //endpoints---------------------------------------------------------------------------
 
+app.Map("/", [Authorize](HttpContext context) =>
+{
+    var login = context.User.FindFirst(ClaimTypes.Name);
+    var city = context.User.FindFirst(ClaimTypes.Locality);
+    var company = context.User.FindFirst("company");
+    return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
+});
+
 // доступ только для City = London
 app.Map("/london", [Authorize("OnlyForLondon")]() => "You are living in London");
 
@@ -182,7 +196,10 @@ app.Map("/london", [Authorize("OnlyForLondon")]() => "You are living in London")
 app.Map("/microsoft", [Authorize(Policy = "OnlyForMicrosoft")]() => "You are working in Microsoft");
 
 // api доступ
-app.Map("/hello_jwt", [Authorize(Policy = "api")]() => "Hello World!");
+app.MapGet("/hello_jwt", [Authorize]() => "Hello World!");
+
 
 app.Run();
+
+
 

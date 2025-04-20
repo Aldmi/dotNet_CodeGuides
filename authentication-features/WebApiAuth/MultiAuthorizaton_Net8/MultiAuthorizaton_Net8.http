@@ -1,0 +1,15 @@
+@HostAddress = http://localhost:5014
+@JwtToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfYWNjZXNzIjoiWWVzIiwiZXhwIjoxNzQ1MTMzMTQ3LCJpc3MiOiJNeUF1dGhTZXJ2ZXIiLCJhdWQiOiJNeUF1dGhDbGllbnQifQ.r5zPsCHhNrhP6ZySPjFyzjLdDbMPQVfggGYWY4oYGyY
+
+
+### 1. Сначала получаем токен
+POST {{HostAddress}}/jwt
+Accept: application/json
+Content-Type: application/json
+
+
+### jwt endpoint
+
+GET {{HostAddress}}/hello_jwt/
+Accept: application/json
+Authorization: Bearer {{JwtToken}}
