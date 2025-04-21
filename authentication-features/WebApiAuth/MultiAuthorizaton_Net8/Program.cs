@@ -188,14 +188,14 @@ app.MapPost("/jwt", ( [FromServices]UsersDb userDb) =>
 
 
 //endpoints---------------------------------------------------------------------------
-
-app.Map("/", [Authorize](HttpContext context) =>
-{
-    var login = context.User.FindFirst(ClaimTypes.Name);
-    var city = context.User.FindFirst(ClaimTypes.Locality);
-    var company = context.User.FindFirst("company");
-    return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
-});
+//
+// app.Map("/", [Authorize](HttpContext context) =>
+// {
+//     var login = context.User.FindFirst(ClaimTypes.Name);
+//     var city = context.User.FindFirst(ClaimTypes.Locality);
+//     var company = context.User.FindFirst("company");
+//     return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
+// });
 
 // web+api доступ
 app.MapGet("/hello_api_jwt", [Authorize("api_web_access")]() => "web + api Hello");

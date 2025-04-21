@@ -10,22 +10,57 @@ using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.Services.AddAuthorization(opts => {
+//  
+//     //политики для cookies
+//     opts.AddPolicy("OnlyForLondon", policy => {
+//         policy.RequireClaim(ClaimTypes.Locality, "Лондон", "London")
+//             .AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme);
+//     });
+//     opts.AddPolicy("OnlyForMicrosoft", policy => {
+//         policy.RequireClaim("company", "Microsoft");
+//     });
+//     
+//     // Политика только для JWT
+//     opts.AddPolicy("api", policy => {
+//         policy.RequireClaim("api_access", "Yes")
+//             .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+//     });
+// });
+
 builder.Services.AddAuthorization(opts => {
- 
-    //политики для cookies
+    // Политики для Web
     opts.AddPolicy("OnlyForLondon", policy => {
-        policy.RequireClaim(ClaimTypes.Locality, "Лондон", "London");
-    });
-    opts.AddPolicy("OnlyForMicrosoft", policy => {
-        policy.RequireClaim("company", "Microsoft");
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+            .RequireClaim(ClaimTypes.Locality, "Лондон", "London");
     });
     
-    // Политика только для JWT
-    opts.AddPolicy("api", policy => {
-        policy.RequireClaim("api_access", "Yes")
-            .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme);
+    opts.AddPolicy("OnlyForMicrosoft", policy => {
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme)
+            .RequireClaim("company", "Microsoft");
+    });
+    
+    // Политика для Api
+    opts.AddPolicy("api_access", policy => {
+        policy.AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+            .RequireClaim("api_access", "Yes");
+    });
+    
+    // Политика для Web + api
+    opts.AddPolicy("api_web_access", policy =>
+    {
+        policy.AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme,
+                JwtBearerDefaults.AuthenticationScheme)
+            .RequireAuthenticatedUser()
+            .RequireAssertion(context =>
+            {
+                var hasClaim = context.User.HasClaim("api_access", "Yes") ||
+                               context.User.HasClaim("company", "Microsoft");
+                return hasClaim;
+            });
     });
 });
+
 
 // Настройка аутентификации (оба типа)
 builder.Services.AddAuthentication(options =>
@@ -55,21 +90,21 @@ builder.Services.AddAuthentication(options =>
             IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
             ValidateIssuerSigningKey = true,
         };
+    })
+    //Добавляем политику, которая проверяет обе схемы
+      .AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
+    {
+        options.ForwardDefaultSelector = context =>
+        {
+            // Если есть заголовок Authorization с Bearer токеном - используем JWT
+            string authorization = context.Request.Headers.Authorization;
+            if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
+                return JwtBearerDefaults.AuthenticationScheme;
+            
+            // Иначе используем cookie
+            return CookieAuthenticationDefaults.AuthenticationScheme;
+        };
     });
-    // Добавляем политику, которая проверяет обе схемы
-    // .AddPolicyScheme("JWT_OR_COOKIE", "JWT_OR_COOKIE", options =>
-    // {
-    //     options.ForwardDefaultSelector = context =>
-    //     {
-    //         // Если есть заголовок Authorization с Bearer токеном - используем JWT
-    //         string authorization = context.Request.Headers.Authorization;
-    //         if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
-    //             return JwtBearerDefaults.AuthenticationScheme;
-    //         
-    //         // Иначе используем cookie
-    //         return CookieAuthenticationDefaults.AuthenticationScheme;
-    //     };
-    // });
 
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSingleton<UsersDb>();
@@ -175,14 +210,25 @@ app.MapPost("/jwt", ( [FromServices]UsersDb userDb) =>
 
 //endpoints---------------------------------------------------------------------------
 
-// доступ только для City = London
+app.Map("/", [Authorize](HttpContext context) =>
+{
+    var login = context.User.FindFirst(ClaimTypes.Name);
+    var city = context.User.FindFirst(ClaimTypes.Locality);
+    var company = context.User.FindFirst("company");
+    return $"Name: {login?.Value}\nCity: {city?.Value}\nCompany: {company?.Value}";
+});
+
+// web+api доступ
+app.MapGet("/hello_api_jwt", [Authorize("api_web_access")]() => "web + api Hello");
+
+// web "OnlyForLondon"
 app.Map("/london", [Authorize("OnlyForLondon")]() => "You are living in London");
 
-// доступ только для Company = Microsoft
-app.Map("/microsoft", [Authorize(Policy = "OnlyForMicrosoft")]() => "You are working in Microsoft");
+// web "OnlyForMicrosoft"
+app.Map("/microsoft", [Authorize("OnlyForMicrosoft")]() => "You are working in Microsoft");
 
 // api доступ
-app.Map("/hello_jwt", [Authorize(Policy = "api")]() => "Hello World!");
+app.MapGet("/hello_jwt", [Authorize("api_access")]() => "api Hello");
 
 app.Run();
 
