@@ -1,0 +1,38 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="using:MammaMiaDev.ViewModels"
+             xmlns:viewModels="clr-namespace:MammaMiaDev.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="MammaMiaDev.Views.ImagePageView"
+             x:DataType="viewModels:ImagePageViewModel">
+   
+    <Design.DataContext>
+        <vm:ImagePageViewModel/>
+    </Design.DataContext>
+    
+    
+    <ScrollViewer>
+        <StackPanel Margin="0 20" HorizontalAlignment="Left">
+            <TextBlock Margin="0 20" FontSize="20" FontWeight="Bold">Images</TextBlock>
+            
+            <TextBlock Margin="0 20" FontSize="15" FontWeight="Bold">Direct path</TextBlock>
+            <Border CornerRadius="10" ClipToBounds="True" Width="300">
+                <Image Source="/Assets/Chocolate_Img.jpg" MaxWidth="300"></Image>
+            </Border>
+            
+            <TextBlock Margin="0 20" FontSize="15" FontWeight="Bold">Image from resource</TextBlock>
+            <Border CornerRadius="10" ClipToBounds="True" Width="300">
+                <Image Source="{Binding Path=ImageSourceBtmLocal}"></Image>
+            </Border>
+            
+            <TextBlock Margin="0 20" FontSize="15" FontWeight="Bold">Image from web (async)</TextBlock>
+            <Border CornerRadius="10" ClipToBounds="True" Width="300">
+                <Image Source="{Binding Path=ImageSourceBtmWeb^}"></Image>
+            </Border>
+            
+            
+        </StackPanel>
+    </ScrollViewer>
+</UserControl>
