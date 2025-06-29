@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreeterServiceApp", "Greete
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreeterClientApp", "GreeterClientApp\GreeterClientApp.csproj", "{B3DC9303-2569-4BD3-A0DC-0CBCA5F88784}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GreeterClient.WebAli", "GreeterClient.WebAli\GreeterClient.WebAli.csproj", "{3FEE1330-1B0E-402E-847C-EF1AC38D47A8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{B3DC9303-2569-4BD3-A0DC-0CBCA5F88784}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3DC9303-2569-4BD3-A0DC-0CBCA5F88784}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3DC9303-2569-4BD3-A0DC-0CBCA5F88784}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3FEE1330-1B0E-402E-847C-EF1AC38D47A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FEE1330-1B0E-402E-847C-EF1AC38D47A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FEE1330-1B0E-402E-847C-EF1AC38D47A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FEE1330-1B0E-402E-847C-EF1AC38D47A8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

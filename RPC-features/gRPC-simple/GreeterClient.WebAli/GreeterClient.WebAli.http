@@ -1,0 +1,6 @@
+@GreeterClient.WebAli_HostAddress = http://localhost:5053
+
+GET {{GreeterClient.WebAli_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

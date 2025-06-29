@@ -7,9 +7,10 @@ public class GreeterService(ILogger<GreeterService> _logger) : Greeter.GreeterBa
 {
     public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
     {
+        _logger.LogInformation($"Hello {request.Name}");
         return Task.FromResult(new HelloReply
         {
-            Message = "Hello " + request.Name
+            Message = "Hello " + request.Name + DateTime.Now.ToString("hh:mm:ss")
         });
     }
 
