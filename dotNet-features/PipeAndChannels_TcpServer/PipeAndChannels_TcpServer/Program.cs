@@ -52,6 +52,7 @@ finally
 
 return 0;
 
+
 async Task HandleClient(TcpClient client, ChannelWriter<string> channelWriter, CancellationToken ct)
 {
 	try
@@ -70,18 +71,20 @@ async Task HandleClient(TcpClient client, ChannelWriter<string> channelWriter, C
 				//Обрабатываем полученный буфер (он состоит из кусочков)
 				while (true)
 				{
-					var position = buffer.PositionOf((byte)'\n'); //если нажали enter, то отправляем полученную строку в channelWriter
+					var position = buffer.PositionOf((byte)'1'); // (в конце строки находится /r/n) если нажали enter, то отправляем полученную строку в channelWriter
 					if (position == null)
 						break;
 			
 					var line = buffer.Slice(0, position.Value);
 					var message= Encoding.UTF8.GetString(line.ToArray());
 					await channelWriter.WriteAsync(message, ct);
-			
-					buffer = buffer.Slice(buffer.GetPosition(1, position.Value));
+
+					var next = buffer.GetPosition(1, position.Value);//это эквивалентно position + 1
+					buffer = buffer.Slice(next); //пропустить то, что мы уже обработали, включая '\n'
 				}
 		
 				pipe.Reader.AdvanceTo(buffer.Start, buffer.End);
+				Console.WriteLine($"Reader.AdvanceTo {buffer.Start.GetInteger()} - {buffer.End.GetInteger()}");
 		
 				if(result.IsCompleted)
 					break;
@@ -93,10 +96,6 @@ async Task HandleClient(TcpClient client, ChannelWriter<string> channelWriter, C
 		Console.WriteLine($"Ошибка обработки клиента: {ex.Message}");
 	}
 }
-
-
-
-
 
 
 async Task FillPipe(NetworkStream stream, PipeWriter writer, CancellationToken ct)
