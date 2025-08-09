@@ -4,9 +4,9 @@ using Avalonia.Markup.Xaml;
 
 namespace MammaMiaDev.Views;
 
-public partial class DialogInListBoxItemView : UserControl
+public partial class ListItemsPageView : UserControl
 {
-	public DialogInListBoxItemView()
+	public ListItemsPageView()
 	{
 		InitializeComponent();
 	}
