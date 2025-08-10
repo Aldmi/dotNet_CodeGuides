@@ -6,9 +6,7 @@
               x:Class="MammaMiaDev.Views.DialogNetworkSettingsView"
               xmlns:vm="using:MammaMiaDev.ViewModels"
               x:DataType="vm:DialogNetworkSettingsViewModel"
-              Width="400" Height="800"
-              >
-
+              Width="400" Height="800">
     <StackPanel Margin="20" Spacing="15">
         <TextBox Text="{Binding TagId}"
                  Watermark="Tag id" />
@@ -28,6 +26,4 @@
                     Width="80" />
         </StackPanel>
     </StackPanel>
-
-
 </UserControl>

@@ -42,7 +42,7 @@
                             <!-- Id тега -->
                             <TextBlock Text="{Binding TagId}" FontWeight="Bold" />
 
-                            <Button Content="Сетевые настройки"
+                            <Button Content="Сетевые настройки Dialog"
                                     Command="{Binding GetNetworkSettingsCommand}"
                                     Margin="5"
                                     Padding="10,5" />

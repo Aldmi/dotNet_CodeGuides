@@ -89,25 +89,4 @@ public partial class App : Application
 			BindingPlugins.DataValidators.Remove(plugin);
 		}
 	}
-	
-	private static ServiceCollection ConfigureBaseServices()
-	{
-		var services = new ServiceCollection();
-
-		// Регистрируем все ViewModel
-		services.AddTransient<MainWindowViewModel>();
-		services.AddTransient<HomePageViewModel>();
-		services.AddTransient<ButtonPageViewModel>();
-		services.AddTransient<ImagePageViewModel>();
-		services.AddTransient<GridPageViewModel>();
-		services.AddTransient<ListItemsPageViewModel>();
-        
-		// Регистрируем Model
-		services.AddTransient<TagResponseModel>();
-        
-		// Регистрируем Service
-		services.AddSingleton<IChangeNetworkSettingService, ChangeNetworkSettingService>();
-
-		return services;
-	}
 }
