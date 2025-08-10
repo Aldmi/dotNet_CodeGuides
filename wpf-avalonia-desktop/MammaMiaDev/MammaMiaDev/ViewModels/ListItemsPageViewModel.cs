@@ -2,16 +2,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Net;
+using MammaMiaDev.Domain.Core.Services;
 using MammaMiaDev.Models;
+using MammaMiaDev.Services;
+
 
 namespace MammaMiaDev.ViewModels;
 
-public class ListItemsPageViewModel : ViewModelBase
+public class ListItemsPageViewModel(IDialogService dialogService, IChangeNetworkSettingService changeNetworkSettingService) : ViewModelBase
 {
 	public ReadOnlyObservableCollection<TagResponseModel> FilteredScannerResultList =>
 		new ReadOnlyObservableCollection<TagResponseModel>(
 			[
-				new TagResponseModel()
+				new TagResponseModel(dialogService, changeNetworkSettingService)
 				{
 					TagId = Guid.NewGuid(),
 					CreatedAtUtc = DateTime.UtcNow,
@@ -27,7 +30,7 @@ public class ListItemsPageViewModel : ViewModelBase
 					}
 				},
 				
-				new TagResponseModel()
+				new TagResponseModel(dialogService, changeNetworkSettingService)
 				{
 					TagId = Guid.NewGuid(),
 					CreatedAtUtc = DateTime.UtcNow,

@@ -4,7 +4,7 @@ using Avalonia.Markup.Xaml;
 
 namespace MammaMiaDev.Views;
 
-public partial class DialogNetworkSettingsView : Window
+public partial class DialogNetworkSettingsView : UserControl
 {
 	public DialogNetworkSettingsView()
 	{

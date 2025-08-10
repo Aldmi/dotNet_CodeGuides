@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using MammaMiaDev.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MammaMiaDev;
 
@@ -17,7 +18,16 @@ public class ViewLocator : IDataTemplate
 
 		if (type != null)
 		{
-			return (Control)Activator.CreateInstance(type)!;
+			try
+			{
+				// Используем DI для создания View
+				return (Control)ActivatorUtilities.CreateInstance(App.Services!, type);
+			}
+			catch
+			{
+				// Fallback для дизайна
+				return (Control)Activator.CreateInstance(type)!;
+			}
 		}
 
 		return new TextBlock { Text = "Not Found: " + name };

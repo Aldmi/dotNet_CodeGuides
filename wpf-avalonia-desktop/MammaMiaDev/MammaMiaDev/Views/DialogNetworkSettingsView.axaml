@@ -1,15 +1,33 @@
-<Window xmlns="https://github.com/avaloniaui"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="MammaMiaDev.Views.DialogNetworkSettingsView"
-        xmlns:vm="using:MammaMiaDev.ViewModels"
-        x:DataType="vm:DialogNetworkSettingsViewModel"
-        CanResize="False"
-        Topmost="True"
-        Width="400" Height="400"
-        Title="DialogNetworkSettingsView">
-   
-        
-</Window>
+<UserControl  xmlns="https://github.com/avaloniaui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+              x:Class="MammaMiaDev.Views.DialogNetworkSettingsView"
+              xmlns:vm="using:MammaMiaDev.ViewModels"
+              x:DataType="vm:DialogNetworkSettingsViewModel"
+              Width="400" Height="800"
+              >
+
+    <StackPanel Margin="20" Spacing="15">
+        <TextBox Text="{Binding TagId}"
+                 Watermark="Tag id" />
+
+        <!-- <TextBox Text="{Binding SubnetMask}" -->
+        <!--          Watermark="Маска подсети" /> -->
+
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Spacing="10">
+            <Button Content="Отмена"
+                    Command="{Binding CancelCommand}"
+                    Width="80" />
+
+            <Button Content="Применить"
+                    Command="{Binding ApplySettingsCommand}"
+                    Width="80" />
+        </StackPanel>
+    </StackPanel>
+
+
+</UserControl>
